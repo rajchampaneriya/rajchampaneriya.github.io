@@ -33,7 +33,7 @@
     <link rel="preload" as="image" href="{{ (.Site.Params.profileMode.imageUrl | default "images/profile.jpg") | absURL }}">
     {{ end }}
     <!-- Preload hero card background image (reduces contention with LCP) -->
-    <link rel="preload" as="image" href="{{ "images/home-page.jpeg" | relURL }}">
+    <link rel="preload" as="image" href="{{ "images/home-page-banner 1.png" | relURL }}">
     {{ else if eq .Layout "about" }}
     <!-- Preload LCP image (about header photo) on about page only -->
     {{ $profile := resources.Get "images/profile.jpg" }}

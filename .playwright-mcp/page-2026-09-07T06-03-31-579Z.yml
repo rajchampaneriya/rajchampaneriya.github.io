@@ -1,0 +1,162 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "rajc.work" [ref=e5] [cursor=pointer]:
+        - /url: http://localhost:7431/
+        - generic [ref=e6]: rajc
+        - generic [aria-hidden] [ref=e7]: ·
+        - generic [ref=e8]: work
+      - navigation "Main" [ref=e9]:
+        - link "Home" [ref=e10] [cursor=pointer]:
+          - /url: http://localhost:7431/
+        - link "Insights" [ref=e11] [cursor=pointer]:
+          - /url: http://localhost:7431/blog/
+        - link "Blueprints" [ref=e12] [cursor=pointer]:
+          - /url: http://localhost:7431/projects/
+        - link "About" [ref=e13] [cursor=pointer]:
+          - /url: http://localhost:7431/about/
+        - button "Listen" [ref=e15] [cursor=pointer]
+        - link "Share on LinkedIn" [ref=e19] [cursor=pointer]:
+          - /url: https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2Flocalhost%3A7431%2F
+        - link "GitHub" [ref=e24] [cursor=pointer]:
+          - /url: https://github.com/rajchampaneriya
+      - button "Switch to dark theme" [ref=e27] [cursor=pointer]
+      - button "Search" [ref=e31] [cursor=pointer]
+  - main [ref=e35]:
+    - generic [ref=e36]:
+      - generic [ref=e39]:
+        - link [ref=e40] [cursor=pointer]:
+          - /url: ./about/
+          - img "Raj Champaneriya — Technical Solution Architect & Strategic Technology Leader" [ref=e42]
+        - generic [ref=e43]:
+          - heading "Raj Champaneriya" [level=1] [ref=e44]
+          - paragraph [ref=e45]: Technical Solution Architect & Strategic Technology Leader
+          - paragraph [ref=e46]: Architecture that protects careers and accelerates transformations
+      - generic [ref=e47]:
+        - generic [ref=e48]: Experience across
+        - generic [ref=e49]:
+          - generic [ref=e50]: Healthcare
+          - generic [ref=e53]: Property Insurance
+          - generic [ref=e56]: Media & Entertainment
+          - generic [ref=e60]: Logistics
+          - generic [ref=e66]: Fortune 500
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]: 99.95%
+          - generic [ref=e73]: Uptime SLA
+        - generic [ref=e74]:
+          - generic [ref=e75]: $8M+
+          - generic [ref=e76]: Modernization
+        - generic [ref=e77]:
+          - generic [ref=e78]: 40%
+          - generic [ref=e79]: Cost Reduction
+        - generic [ref=e80]:
+          - generic [ref=e81]: 10K+
+          - generic [ref=e82]: AI Queries / Month
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - heading "The CARE Architecture Method" [level=2] [ref=e86]
+          - paragraph [ref=e87]: A proven framework for high-stakes enterprise transformations
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e91]: C
+            - generic [ref=e92]:
+              - generic [ref=e93]: Clarity
+              - generic [ref=e94]: Decompose ambiguity into actionable decisions
+          - generic [ref=e95]:
+            - generic [ref=e97]: A
+            - generic [ref=e98]:
+              - generic [ref=e99]: Alignment
+              - generic [ref=e100]: Map technical direction to business outcomes
+          - generic [ref=e101]:
+            - generic [ref=e103]: R
+            - generic [ref=e104]:
+              - generic [ref=e105]: Reality
+              - generic [ref=e106]: Validate through prototypes & decision frameworks
+          - generic [ref=e107]:
+            - generic [ref=e109]: E
+            - generic [ref=e110]:
+              - generic [ref=e111]: Execution
+              - generic [ref=e112]: Deliver with zero critical defects
+      - generic [ref=e113]:
+        - heading "Strategic Insights" [level=2] [ref=e114]
+        - generic [ref=e115]:
+          - article [ref=e116]:
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - generic [ref=e119]: Sep 6, 2026
+                - generic [ref=e120]: Architecture Work
+              - heading [level=3] [ref=e121]:
+                - 'link "The Night Redundancy Broke Correctness: A CARE Case Study" [ref=e122] [cursor=pointer]':
+                  - /url: ./blog/2026/09/singleton-consumer-care-case-study/
+              - paragraph [ref=e123]: A zone-redundant deployment silently doubled every message an integration platform processed. An anonymized walkthrough …
+          - article [ref=e124]:
+            - generic [ref=e125]:
+              - generic [ref=e126]:
+                - generic [ref=e127]: Sep 6, 2026
+                - generic [ref=e128]: Architecture Work
+              - heading [level=3] [ref=e129]:
+                - 'link "Modernizing the Platform That Couldn''t Stop: A CARE Case Study" [ref=e130] [cursor=pointer]':
+                  - /url: ./blog/2026/09/healthcare-modernization-care-case-study/
+              - paragraph [ref=e131]: A business-critical healthcare platform, a legacy estate still serving production, and zero tolerance for downtime. An …
+          - article [ref=e132]:
+            - generic [ref=e133]:
+              - generic [ref=e134]:
+                - generic [ref=e135]: Jun 7, 2026
+                - generic [ref=e136]: Technical Concepts
+              - heading [level=3] [ref=e137]:
+                - link "Graph Was a Side Character. Now It's the Brain of the Entire AI Operation." [ref=e138] [cursor=pointer]:
+                  - /url: ./blog/2026/06/graph-data-structures-genai-backbone/
+              - paragraph [ref=e139]: Before GenAI, graph was a niche skill endorsement. Now it’s the structural backbone that makes LLMs accurate, …
+          - article [ref=e140]:
+            - generic [ref=e141]:
+              - generic [ref=e142]:
+                - generic [ref=e143]: Apr 5, 2026
+                - generic [ref=e144]: Industry Experience
+              - heading [level=3] [ref=e145]:
+                - link "A Tale of Four Railways — International Comparisons" [ref=e146] [cursor=pointer]:
+                  - /url: ./blog/2026/03/travel_n_transport/day-18-international-rail-comparisons/
+              - paragraph [ref=e147]: "How does Australian rail compare? A familiar question leads to an unexpected discovery: Japan, UK, India, and Germany …"
+          - article [ref=e148]:
+            - generic [ref=e149]:
+              - generic [ref=e150]:
+                - generic [ref=e151]: Apr 4, 2026
+                - generic [ref=e152]: Industry Experience
+              - heading [level=3] [ref=e153]:
+                - link "The Hack That Stops a Nation — Cybersecurity in Rail Operations" [ref=e154] [cursor=pointer]:
+                  - /url: ./blog/2026/03/travel_n_transport/day-17-cybersecurity-rail/
+              - paragraph [ref=e155]: Everyone knows cybersecurity is important. But what if, in rail, a cyber breach doesn’t just steal data — it stops …
+        - link "View All Insights →" [ref=e157] [cursor=pointer]:
+          - /url: http://localhost:7431/blog/
+  - contentinfo [ref=e158]:
+    - generic [ref=e159]:
+      - generic [ref=e160]:
+        - link "GitHub" [ref=e161] [cursor=pointer]:
+          - /url: https://github.com/rajchampaneriya
+        - link "LinkedIn" [ref=e165] [cursor=pointer]:
+          - /url: https://linkedin.com/in/rajchampaneriya
+      - link "Email" [ref=e170] [cursor=pointer]:
+        - /url: mailto:champaneriyaraj@gmail.com
+      - generic [ref=e175]: Designed for clarity · Maintained with care
+      - generic [ref=e176]: Views expressed are my own and do not represent IBM or its clients.
+  - generic:
+    - generic:
+      - generic:
+        - generic: Now Playing...
+        - generic: 0:00 / 0:00
+      - generic:
+        - button "Rewind 15 seconds"
+        - button "Play or Pause"
+        - button "Forward 15 seconds"
+        - button "Change playback speed": 1×
+        - button "Close player"
+    - slider "Audio seek bar"
+  - button "Scroll to Top"
+  - generic [aria-hidden]:
+    - generic:
+      - generic:
+        - generic:
+          - searchbox
+          - generic: ESC
+        - button
+      - list

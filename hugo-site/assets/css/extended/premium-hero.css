@@ -111,14 +111,13 @@
     background-image:
         linear-gradient(to right,
             var(--color-surface) 0%,
-            color-mix(in srgb, var(--color-surface) 97%, transparent) 22%,
-            color-mix(in srgb, var(--color-surface) 88%, transparent) 40%,
-            color-mix(in srgb, var(--color-surface) 50%, transparent) 65%,
-            color-mix(in srgb, var(--color-surface) 20%, transparent) 85%,
+            var(--color-surface) 42%,
+            color-mix(in srgb, var(--color-surface) 82%, transparent) 58%,
+            color-mix(in srgb, var(--color-surface) 32%, transparent) 76%,
             transparent 100%),
-        url(/images/home-page.jpeg);
+        url(/images/home-page-banner%201.png);
     background-size: cover;
-    background-position: center right;
+    background-position: center;
     background-repeat: no-repeat;
     pointer-events: none;
 }
@@ -133,12 +132,11 @@
     background-image:
         linear-gradient(to right,
             var(--color-surface) 0%,
-            color-mix(in srgb, var(--color-surface) 97%, transparent) 22%,
-            color-mix(in srgb, var(--color-surface) 88%, transparent) 40%,
-            color-mix(in srgb, var(--color-surface) 50%, transparent) 65%,
-            color-mix(in srgb, var(--color-surface) 20%, transparent) 85%,
+            var(--color-surface) 42%,
+            color-mix(in srgb, var(--color-surface) 82%, transparent) 58%,
+            color-mix(in srgb, var(--color-surface) 32%, transparent) 76%,
             transparent 100%),
-        url(/images/home-page.jpeg);
+        url(/images/home-page-banner%201.png);
 }
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -287,14 +285,14 @@
 
 .hero-premium__tagline {
     font-size: var(--hero-tagline-desktop);
-    color: var(--color-text-muted);
+    color: var(--color-text-main);
     margin: 0 auto;
     max-width: 50ch;
+    text-shadow: 0 1px 3px color-mix(in srgb, var(--color-surface) 85%, transparent);
     line-height: 1.5;
-       margin-left: 0;
-        margin-right: 0;
-        text-align: left;
-
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
 }
 
 /* Action Buttons — scoped to hero; use design tokens for consistency with trust badges */
@@ -977,14 +975,48 @@ pre code.language-json {
         padding: var(--space-xs) 0;
     }
 
+    /* Phones: speaker + text stay sharp, rest of banner softly blurred.
+       ::before = full banner blurred; ::after = same banner unblurred,
+       masked so only the right side (speaker, anchored at 82% 50%) shows sharp.
+       Identical background-size/position keeps the two layers pixel-aligned. */
+    .hero-premium__card.surface-panel::before {
+        display: block;
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background-image: url(/images/home-page-banner%201.png);
+        background-size: cover;
+        background-position: 82% 50%;
+        background-repeat: no-repeat;
+        filter: blur(5px);
+        transform: scale(1.02);
+        pointer-events: none;
+    }
+
+    .hero-premium__card.surface-panel::after {
+        background-image:
+            linear-gradient(to right,
+                transparent 0%,
+                transparent 100%),
+            url(/images/home-page-banner%201.png);
+        background-position: 82% 50%;
+        filter: none;
+        transform: none;
+        mask-image: linear-gradient(to right, transparent 35%, black 60%);
+        -webkit-mask-image: linear-gradient(to right, transparent 35%, black 60%);
+    }
+
     .hero-premium__card {
         padding: var(--space-md) var(--home-padding-mobile);
     }
 
     .hero-premium__header {
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        align-items: flex-start;
+        text-align: left;
         gap: var(--space-sm);
     }
 
@@ -995,17 +1027,22 @@ pre code.language-json {
 
     .hero-premium__info {
         width: 100%;
-        text-align: center;
+        text-align: left;
+        position: relative;
+        z-index: 2;
+        background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: var(--radius-sm);
     }
 
     .hero-premium__name {
-        font-size: var(--hero-name-mobile);
+        font-size: 1.35rem;
         line-height: 1.25;
         margin-bottom: var(--space-2xs);
     }
 
     .hero-premium__role-row {
-        justify-content: center;
+        justify-content: flex-start;
         gap: var(--space-2xs);
         margin-top: 0;
     }
@@ -1026,7 +1063,7 @@ pre code.language-json {
     }
 
     .hero-premium__headline {
-        font-size: var(--hero-headline-mobile);
+        font-size: 0.8rem;
         margin: var(--space-xs) 0 0;
         line-height: 1.35;
         -webkit-line-clamp: 2;
@@ -1190,17 +1227,27 @@ pre code.language-json {
     }
 }
 
-/* ----- Tablet (768px–1024px): centered layout, 2x2 metrics, all trust badges ----- */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+/* ----- Tablet (480px–1024px): desktop-style row, 2x2 metrics, all trust badges ----- */
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .hero-premium__info {
+        background: transparent;
+        padding: 0;
+    }
+
+    .hero-premium__card.surface-panel::after {
+        background-size: 100% 100%;
+        background-position: right center;
+    }
+
     .hero-premium__card {
         padding: var(--space-lg) var(--home-padding-tablet);
     }
 
     .hero-premium__header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: var(--space-md);
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+        gap: var(--space-sm);
     }
 
     .hero-premium__avatar {
@@ -1209,11 +1256,15 @@ pre code.language-json {
     }
 
     .hero-premium__name {
-        font-size: var(--hero-name-tablet);
+        font-size: 1.35rem;
+    }
+
+    .hero-premium__headline {
+        font-size: 0.8rem;
     }
 
     .hero-premium__role-row {
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .hero-premium__tagline {
@@ -1221,6 +1272,8 @@ pre code.language-json {
         margin-left: 0;
         margin-right: 0;
         text-align: left;
+        white-space: nowrap;
+        font-size: 0.7rem;
     }
 
     .hero-premium__actions {
@@ -1271,6 +1324,14 @@ pre code.language-json {
 
     .hero-premium__card {
         padding: var(--space-lg) var(--space-xl);
+    }
+
+    .hero-premium__card.surface-panel::after {
+        background-position: right center;
+    }
+
+    .hero-premium__card.surface-panel::after {
+        background-size: 100% 100%;
     }
 
     .hero-premium__header {
