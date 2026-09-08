@@ -23,7 +23,8 @@
   }
 
   body.page-home .hero-premium__tagline {
-    font-size: var(--hero-tagline-mobile);
+    font-size: 1rem;
+    font-style: italic;
   }
 
   /* -------------------------------------------------------------------------
