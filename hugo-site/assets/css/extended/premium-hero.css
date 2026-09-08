@@ -111,9 +111,9 @@
     background-image:
         linear-gradient(to right,
             var(--color-surface) 0%,
-            var(--color-surface) 24%,
-            color-mix(in srgb, var(--color-surface) 55%, transparent) 42%,
-            color-mix(in srgb, var(--color-surface) 18%, transparent) 58%,
+            var(--color-surface) 16%,
+            color-mix(in srgb, var(--color-surface) 40%, transparent) 34%,
+            color-mix(in srgb, var(--color-surface) 10%, transparent) 50%,
             transparent 100%),
         url(/images/home-page-banner%201.png);
     background-size: cover;
@@ -132,9 +132,9 @@
     background-image:
         linear-gradient(to right,
             var(--color-surface) 0%,
-            var(--color-surface) 24%,
-            color-mix(in srgb, var(--color-surface) 55%, transparent) 42%,
-            color-mix(in srgb, var(--color-surface) 18%, transparent) 58%,
+            var(--color-surface) 16%,
+            color-mix(in srgb, var(--color-surface) 40%, transparent) 34%,
+            color-mix(in srgb, var(--color-surface) 10%, transparent) 50%,
             transparent 100%),
         url(/images/home-page-banner%201.png);
 }
