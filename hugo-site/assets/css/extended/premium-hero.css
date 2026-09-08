@@ -1510,10 +1510,10 @@ pre code.language-json {
         inset: 0;
         z-index: 0;
 
-        background: url(/images/home-page-banner%201.png) right center / cover no-repeat !important;
+        background: url(/images/home-page-banner%201.png) 86% 35% / cover no-repeat !important;
         background-image: url(/images/home-page-banner%201.png) !important;
         background-size: cover !important;
-        background-position: right center !important;
+        background-position: 89% 35% !important;
         background-repeat: no-repeat !important;
 
         filter: none !important;
@@ -1546,6 +1546,7 @@ pre code.language-json {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
 
+        margin-left: calc(-2 * var(--space-xs)) !important;
         padding-left: 0;
         padding-right: 0;
     }
