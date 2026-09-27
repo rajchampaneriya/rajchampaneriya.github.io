@@ -10,7 +10,7 @@ disclaimer: true
 ---
 
 {{< tldr >}}
-**The decision:** Any job that runs while you sleep deserves the simplest tool that cannot surprise you. So the routine runs as a scripted pipeline, and the model is called exactly once — for the only step that needs a thinking mind. **Why:** Judged across five dimensions — reliability, cost, streak safety, security, flexibility — the pipeline wins four. The agent wins only flexibility, and most of that can be won at build time, while a person is still watching. Everything the agent improvises at 05:30, it improvises alone. **The rule:** Let the agent build the machine; let the machine do the work. Agentic at build time, deterministic at run time.
+**The setup:** Every morning at 05:30, a system on my Mac runs while I sleep — with one requirement that outranks all the others: the streak must never break. **The question:** should it be an autonomous agent, or something far less fashionable? **Inside:** a one-page decision record scored across five dimensions, the one dimension where the agent honestly wins, and the rule I now apply to every automation brief. The answer is not what the 2026 default suggests.
 {{< /tldr >}}
 
 In 2026, the default answer to "automate this" is "build an agent." Give a capable model some tools and a goal, and let it work out the steps.
@@ -49,11 +49,11 @@ The same trade-off in text:
 
 | Dimension | A: pipeline + one LLM call | B: autonomous agent | Winner |
 |---|---|---|---|
-| Reliability | 🟢 Strong | 🔴 Weak | A |
-| Cost | 🟢 Strong | 🔴 Weak | A |
-| Streak safety | 🟢 Strong | 🔴 Weak | A |
-| Security & privacy | 🟢 Strong | 🟡 Mixed | A |
-| Flexibility | 🟡 Mixed | 🟢 Strong | B |
+| Reliability | <span class="verdict verdict-strong">Strong</span> | <span class="verdict verdict-weak">Weak</span> | <span class="verdict verdict-winner">A</span> |
+| Cost | <span class="verdict verdict-strong">Strong</span> | <span class="verdict verdict-weak">Weak</span> | <span class="verdict verdict-winner">A</span> |
+| Streak safety | <span class="verdict verdict-strong">Strong</span> | <span class="verdict verdict-weak">Weak</span> | <span class="verdict verdict-winner">A</span> |
+| Security & privacy | <span class="verdict verdict-strong">Strong</span> | <span class="verdict verdict-mixed">Mixed</span> | <span class="verdict verdict-winner">A</span> |
+| Flexibility | <span class="verdict verdict-mixed">Mixed</span> | <span class="verdict verdict-strong">Strong</span> | <span class="verdict verdict-winner">B</span> |
 
 ## Why each dimension scored the way it did
 
