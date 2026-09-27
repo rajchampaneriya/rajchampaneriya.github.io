@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1568" width="1400" height="1568" role="img" aria-labelledby="adr-title adr-desc" class="adr-diagram">
+<title id="adr-title">ADR-001: Run the daily coach as a scripted pipeline, not an autonomous agent</title>
+<desc id="adr-desc">Trade-off matrix across five dimensions. Scripted pipeline: reliability strong, cost strong, streak safety strong, security strong, flexibility mixed. Autonomous agent: reliability weak, cost weak, streak safety weak, security mixed, flexibility strong. The pipeline wins 4 of 5.</desc>
+<rect x="0.5" y="0.5" width="1399" height="1567" rx="18" fill="#FFFFFF" stroke="#DCE2EA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15" font-weight="600" fill="#2256A0" text-anchor="start"><tspan x="40.0" y="57.0">ADR-001: Architecture Decision Record</tspan></text>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="34" font-weight="700" fill="#151A28" text-anchor="start"><tspan x="40.0" y="105.0">Run the daily coach as a scripted pipeline, not an autonomous agent</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15" font-weight="600" fill="#606673" text-anchor="start"><tspan x="40.0" y="139.8">Status:</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15" font-weight="400" fill="#606673" text-anchor="start"><tspan x="95.7" y="139.8">Accepted</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15" font-weight="600" fill="#606673" text-anchor="start"><tspan x="195.3" y="139.8">Date:</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15" font-weight="400" fill="#606673" text-anchor="start"><tspan x="238.6" y="139.8">27 September 2026</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15" font-weight="600" fill="#606673" text-anchor="start"><tspan x="410.2" y="139.8">Decider:</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15" font-weight="400" fill="#606673" text-anchor="start"><tspan x="474.8" y="139.8">Raj Champaneriya</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15" font-weight="600" fill="#606673" text-anchor="start"><tspan x="632.5" y="139.8">System:</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15" font-weight="400" fill="#606673" text-anchor="start"><tspan x="694.8" y="139.8">FDE Impromptu Coach</tspan></text>
+<rect x="40.0" y="162.8" width="648.0" height="150.0" rx="14" fill="#F3F5F8" stroke="#DCE2EA" stroke-width="1.0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="21" font-weight="700" fill="#151A28" text-anchor="start"><tspan x="62.0" y="206.4">Context</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="16" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="62.0" y="237.7">Every day at 05:30, unattended on a Mac: write five new questions, build the deck,</tspan><tspan x="62.0" y="261.7">record five minutes on camera, upload privately to YouTube, and chase me until I</tspan><tspan x="62.0" y="285.7">record. The daily streak must never break.</tspan></text>
+<rect x="712.0" y="162.8" width="648.0" height="150.0" rx="14" fill="#2256A0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="21" font-weight="700" fill="#FFFFFF" text-anchor="start"><tspan x="734.0" y="206.4">Decision</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="16" font-weight="400" fill="#FFFFFF" text-anchor="start"><tspan x="734.0" y="237.7">Code runs the routine. Claude is called once a day for the one step that needs</tspan><tspan x="734.0" y="261.7">judgment: writing the questions. Its output is schema- and novelty-checked, with a</tspan><tspan x="734.0" y="285.7">132-question bank as fallback.</tspan></text>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="20" font-weight="700" fill="#151A28" text-anchor="start"><tspan x="40.0" y="468.3">Five dimensions</tspan></text>
+<rect x="352.0" y="344.8" width="433.0" height="128.9" rx="12" fill="#EAF0F8" stroke="#2256A0" stroke-width="2"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="18" font-weight="700" fill="#2256A0" text-anchor="start"><tspan x="370.0" y="382.2">Option A: pipeline + one LLM call</tspan></text>
+<rect x="689.0" y="360.8" width="78.0" height="26.0" rx="13" fill="#2256A0"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="728.0" y="379.2">Chosen</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="370.0" y="411.0">launchd starts Python at 05:30. Code builds the deck, drives</tspan><tspan x="370.0" y="431.3">QuickTime and PowerPoint, and calls the YouTube and</tspan><tspan x="370.0" y="451.6">Calendar APIs. claude -p writes the questions.</tspan></text>
+<rect x="797.0" y="344.8" width="433.0" height="128.9" rx="12" fill="#FFFFFF" stroke="#DCE2EA" stroke-width="1.5"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="18" font-weight="700" fill="#151A28" text-anchor="start"><tspan x="815.0" y="382.2">Option B: autonomous agent</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="815.0" y="411.0">A scheduled Claude agent with shell, file, API and</tspan><tspan x="815.0" y="431.3">computer-use tools runs the whole routine from a goal prompt,</tspan><tspan x="815.0" y="451.6">deciding each step as it goes.</tspan></text>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="20" font-weight="700" fill="#151A28" text-anchor="middle"><tspan x="1301.0" y="468.3">Winner</tspan></text>
+<rect x="40.0" y="485.7" width="300.0" height="108.0" rx="10" fill="#F3F5F8" stroke="#DCE2EA" stroke-width="1.0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="19" font-weight="700" fill="#151A28" text-anchor="start"><tspan x="56.0" y="522.2">Reliability</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14" font-weight="400" fill="#606673" text-anchor="start"><tspan x="56.0" y="551.5">Same result at 05:30 every day, with</tspan><tspan x="56.0" y="571.1">nobody watching?</tspan></text>
+<rect x="352.0" y="485.7" width="433.0" height="108.0" rx="10" fill="#E7F4EC" stroke="#2E7D4F" stroke-width="1.5"/>
+<rect x="368.0" y="501.7" width="70.0" height="24.0" rx="12" fill="#2E7D4F"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="403.0" y="519.1">Strong</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="368.0" y="552.4">One fixed code path. A failure found once is fixed once, in</tspan><tspan x="368.0" y="573.5">code, and stays fixed.</tspan></text>
+<rect x="797.0" y="485.7" width="433.0" height="108.0" rx="10" fill="#FCE9E7" stroke="#B83A2E" stroke-width="1.5"/>
+<rect x="813.0" y="501.7" width="70.0" height="24.0" rx="12" fill="#B83A2E"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="848.0" y="519.1">Weak</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="813.0" y="552.4">The plan can differ run to run. Desktop clicks, dialogs and</tspan><tspan x="813.0" y="573.5">permission prompts break unattended runs.</tspan></text>
+<rect x="1242.0" y="485.7" width="118.0" height="108.0" rx="10" fill="#FFFFFF" stroke="#DCE2EA" stroke-width="1.0"/>
+<circle cx="1301.0" cy="531.7" r="22" fill="#2256A0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle"><tspan x="1301.0" y="540.4">A</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#606673" text-anchor="middle"><tspan x="1301.0" y="572.6">pipeline</tspan></text>
+<rect x="40.0" y="605.8" width="300.0" height="108.0" rx="10" fill="#F3F5F8" stroke="#DCE2EA" stroke-width="1.0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="19" font-weight="700" fill="#151A28" text-anchor="start"><tspan x="56.0" y="642.3">Cost</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14" font-weight="400" fill="#606673" text-anchor="start"><tspan x="56.0" y="671.6">Model usage per day, and exposure to</tspan><tspan x="56.0" y="691.2">usage limits</tspan></text>
+<rect x="352.0" y="605.8" width="433.0" height="108.0" rx="10" fill="#E7F4EC" stroke="#2E7D4F" stroke-width="1.5"/>
+<rect x="368.0" y="621.8" width="70.0" height="24.0" rx="12" fill="#2E7D4F"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="403.0" y="639.1">Strong</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="368.0" y="672.5">One short model call a day, two with a retry. Zero on days the</tspan><tspan x="368.0" y="693.5">bank is used.</tspan></text>
+<rect x="797.0" y="605.8" width="433.0" height="108.0" rx="10" fill="#FCE9E7" stroke="#B83A2E" stroke-width="1.5"/>
+<rect x="813.0" y="621.8" width="70.0" height="24.0" rx="12" fill="#B83A2E"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="848.0" y="639.1">Weak</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="813.0" y="672.5">A full tool loop every morning, often with screenshots. A</tspan><tspan x="813.0" y="693.5">usage cap can stop the run.</tspan></text>
+<rect x="1242.0" y="605.8" width="118.0" height="108.0" rx="10" fill="#FFFFFF" stroke="#DCE2EA" stroke-width="1.0"/>
+<circle cx="1301.0" cy="651.8" r="22" fill="#2256A0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle"><tspan x="1301.0" y="660.4">A</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#606673" text-anchor="middle"><tspan x="1301.0" y="692.6">pipeline</tspan></text>
+<rect x="40.0" y="725.8" width="300.0" height="108.0" rx="10" fill="#F3F5F8" stroke="#DCE2EA" stroke-width="1.0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="19" font-weight="700" fill="#151A28" text-anchor="start"><tspan x="56.0" y="762.3">Streak safety</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14" font-weight="400" fill="#606673" text-anchor="start"><tspan x="56.0" y="791.6">What happens when something breaks?</tspan></text>
+<rect x="352.0" y="725.8" width="433.0" height="108.0" rx="10" fill="#E7F4EC" stroke="#2E7D4F" stroke-width="1.5"/>
+<rect x="368.0" y="741.8" width="70.0" height="24.0" rx="12" fill="#2E7D4F"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="403.0" y="759.2">Strong</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="368.0" y="792.5">Model down: bank questions. Upload fails: queued and</tspan><tspan x="368.0" y="813.6">retried. Mac asleep: catch-up run.</tspan></text>
+<rect x="797.0" y="725.8" width="433.0" height="108.0" rx="10" fill="#FCE9E7" stroke="#B83A2E" stroke-width="1.5"/>
+<rect x="813.0" y="741.8" width="70.0" height="24.0" rx="12" fill="#B83A2E"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="848.0" y="759.2">Weak</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="813.0" y="792.5">If the model is down or out of quota, the whole routine stops</tspan><tspan x="813.0" y="813.6">and the day is lost.</tspan></text>
+<rect x="1242.0" y="725.8" width="118.0" height="108.0" rx="10" fill="#FFFFFF" stroke="#DCE2EA" stroke-width="1.0"/>
+<circle cx="1301.0" cy="771.8" r="22" fill="#2256A0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle"><tspan x="1301.0" y="780.5">A</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#606673" text-anchor="middle"><tspan x="1301.0" y="812.7">pipeline</tspan></text>
+<rect x="40.0" y="845.8" width="300.0" height="108.0" rx="10" fill="#F3F5F8" stroke="#DCE2EA" stroke-width="1.0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="19" font-weight="700" fill="#151A28" text-anchor="start"><tspan x="56.0" y="882.4">Security &amp; privacy</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14" font-weight="400" fill="#606673" text-anchor="start"><tspan x="56.0" y="911.7">Blast radius around camera, tokens and</tspan><tspan x="56.0" y="931.3">YouTube</tspan></text>
+<rect x="352.0" y="845.8" width="433.0" height="108.0" rx="10" fill="#E7F4EC" stroke="#2E7D4F" stroke-width="1.5"/>
+<rect x="368.0" y="861.8" width="70.0" height="24.0" rx="12" fill="#2E7D4F"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="403.0" y="879.2">Strong</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="368.0" y="912.6">Tokens are used only by reviewed code paths. Private upload</tspan><tspan x="368.0" y="933.6">is hard-coded, not prompted.</tspan></text>
+<rect x="797.0" y="845.8" width="433.0" height="108.0" rx="10" fill="#FFF5DC" stroke="#B7791F" stroke-width="1.5"/>
+<rect x="813.0" y="861.8" width="70.0" height="24.0" rx="12" fill="#B7791F"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="848.0" y="879.2">Mixed</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="813.0" y="912.6">Broad tools plus live tokens in a prompt-driven loop.</tspan><tspan x="813.0" y="933.6">Prompt-injection and mis-click risk.</tspan></text>
+<rect x="1242.0" y="845.8" width="118.0" height="108.0" rx="10" fill="#FFFFFF" stroke="#DCE2EA" stroke-width="1.0"/>
+<circle cx="1301.0" cy="891.9" r="22" fill="#2256A0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle"><tspan x="1301.0" y="900.5">A</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#606673" text-anchor="middle"><tspan x="1301.0" y="932.7">pipeline</tspan></text>
+<rect x="40.0" y="965.9" width="300.0" height="108.0" rx="10" fill="#F3F5F8" stroke="#DCE2EA" stroke-width="1.0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="19" font-weight="700" fill="#151A28" text-anchor="start"><tspan x="56.0" y="1002.4">Flexibility</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14" font-weight="400" fill="#606673" text-anchor="start"><tspan x="56.0" y="1031.7">How fast can it handle a new request or a</tspan><tspan x="56.0" y="1051.3">surprise?</tspan></text>
+<rect x="352.0" y="965.9" width="433.0" height="108.0" rx="10" fill="#FFF5DC" stroke="#B7791F" stroke-width="1.5"/>
+<rect x="368.0" y="981.9" width="70.0" height="24.0" rx="12" fill="#B7791F"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="403.0" y="999.3">Mixed</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="368.0" y="1032.6">New behaviour needs new code. Claude Code writes and</tspan><tspan x="368.0" y="1053.7">tests it, but someone must ship it.</tspan></text>
+<rect x="797.0" y="965.9" width="433.0" height="108.0" rx="10" fill="#E7F4EC" stroke="#2E7D4F" stroke-width="1.5"/>
+<rect x="813.0" y="981.9" width="70.0" height="24.0" rx="12" fill="#2E7D4F"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle"><tspan x="848.0" y="999.3">Strong</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="813.0" y="1032.6">Adapts from a sentence of instructions, with no code change</tspan><tspan x="813.0" y="1053.7">or redeploy.</tspan></text>
+<rect x="1242.0" y="965.9" width="118.0" height="108.0" rx="10" fill="#FFFFFF" stroke="#DCE2EA" stroke-width="1.0"/>
+<circle cx="1301.0" cy="1011.9" r="22" fill="#FFFFFF" stroke="#2256A0" stroke-width="2"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="22" font-weight="700" fill="#2256A0" text-anchor="middle"><tspan x="1301.0" y="1020.6">B</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#606673" text-anchor="middle"><tspan x="1301.0" y="1052.8">agent</tspan></text>
+<rect x="352.0" y="1085.9" width="1008.0" height="46.0" rx="10" fill="#EAF0F8"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="16" font-weight="600" fill="#1D4987" text-anchor="start"><tspan x="370.0" y="1116.2">Result: A wins 4 of 5 dimensions, B wins 1. Decision: adopt A.</tspan></text>
+<rect x="40.0" y="1098.9" width="20.0" height="20.0" rx="5" fill="#E7F4EC" stroke="#2E7D4F" stroke-width="1.5"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#606673" text-anchor="start"><tspan x="66.0" y="1114.5">Strong</tspan></text>
+<rect x="136.0" y="1098.9" width="20.0" height="20.0" rx="5" fill="#FFF5DC" stroke="#B7791F" stroke-width="1.5"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#606673" text-anchor="start"><tspan x="162.0" y="1114.5">Mixed</tspan></text>
+<rect x="232.0" y="1098.9" width="20.0" height="20.0" rx="5" fill="#FCE9E7" stroke="#B83A2E" stroke-width="1.5"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#606673" text-anchor="start"><tspan x="258.0" y="1114.5">Weak</tspan></text>
+<rect x="40.0" y="1161.9" width="426.7" height="218.1" rx="12" fill="#FFFFFF" stroke="#DCE2EA" stroke-width="1.0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="19" font-weight="700" fill="#2256A0" text-anchor="start"><tspan x="60.0" y="1201.5">What we gain</tspan></text>
+<circle cx="64.0" cy="1227.9" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="76.0" y="1234.7">The same run every day; each failure is fixed once, in</tspan><tspan x="76.0" y="1255.7">code</tspan></text>
+<circle cx="64.0" cy="1278.0" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="76.0" y="1284.7">About one model call a day</tspan></text>
+<circle cx="64.0" cy="1307.0" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="76.0" y="1313.8">The streak survives model, network and upload outages</tspan></text>
+<circle cx="64.0" cy="1336.0" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="76.0" y="1342.8">Credentials are used only by reviewed code paths</tspan></text>
+<rect x="486.7" y="1161.9" width="426.7" height="218.1" rx="12" fill="#FFFFFF" stroke="#DCE2EA" stroke-width="1.0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="19" font-weight="700" fill="#2256A0" text-anchor="start"><tspan x="506.7" y="1201.5">What we accept</tspan></text>
+<circle cx="510.7" cy="1227.9" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="522.7" y="1234.7">New behaviour means new code, written and tested with</tspan><tspan x="522.7" y="1255.7">Claude Code</tspan></text>
+<circle cx="510.7" cy="1278.0" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="522.7" y="1284.7">About 3,500 lines of Python and 35 automated tests to</tspan><tspan x="522.7" y="1305.8">maintain</tspan></text>
+<circle cx="510.7" cy="1328.0" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="522.7" y="1334.8">Only the questions adapt; everything else is fixed until</tspan><tspan x="522.7" y="1355.8">changed</tspan></text>
+<rect x="933.3" y="1161.9" width="426.7" height="218.1" rx="12" fill="#FFFFFF" stroke="#DCE2EA" stroke-width="1.0"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="19" font-weight="700" fill="#2256A0" text-anchor="start"><tspan x="953.3" y="1201.5">Revisit when</tspan></text>
+<circle cx="957.3" cy="1227.9" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="969.3" y="1234.7">Agents run unattended desktop tasks reliably for months</tspan></text>
+<circle cx="957.3" cy="1257.0" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="969.3" y="1263.7">Per-run model cost becomes negligible</tspan></text>
+<circle cx="957.3" cy="1286.0" r="3.5" fill="#5E85BA"/>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#151A28" text-anchor="start"><tspan x="969.3" y="1292.7">The routine starts changing every week</tspan></text>
+<rect x="40.0" y="1404.1" width="1320.0" height="96.5" rx="14" fill="#1D4987"/>
+<text font-family="&#x27;IBM Plex Serif&#x27;, Georgia, &#x27;Times New Roman&#x27;, serif" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="start"><tspan x="64.0" y="1446.8">Principle: agentic at build time, deterministic at run time.</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="15.5" font-weight="400" fill="#FFFFFF" text-anchor="start"><tspan x="64.0" y="1476.0">Claude Code designed, built, tested and debugged this pipeline. At 05:30 the system makes one bounded model call and no agent decisions.</tspan></text>
+<text font-family="&#x27;IBM Plex Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial, sans-serif" font-size="13" font-weight="500" fill="#606673" text-anchor="end"><tspan x="1360.0" y="1533.3">rajc.work | github.com/rajchampaneriya/fde-impromptu-coach</tspan></text>
+</svg>
