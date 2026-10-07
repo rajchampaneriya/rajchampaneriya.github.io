@@ -1,0 +1,40 @@
+{{- /*
+  /llms-full.txt — the full text of every published page as clean Markdown, in one
+  file, for LLMs and AI agents that want the content rather than just the map.
+  Companion to /llms.txt. Drafts are excluded by the build.
+*/ -}}
+{{- $author := site.Params.author -}}
+{{- $about := site.GetPage "/about" -}}
+{{- $projects := site.GetPage "/projects" -}}
+{{- $posts := where site.RegularPages "Section" "blog" -}}
+{{- $pages := slice $about -}}
+{{- range $projects.Pages.ByWeight }}{{ $pages = $pages | append . }}{{ end -}}
+{{- range $posts.ByDate.Reverse }}{{ $pages = $pages | append . }}{{ end -}}
+
+# {{ site.Title }}: full content
+
+> The complete text of every published page on {{ site.Title }}, the portfolio and writing of {{ $author }} ({{ site.Params.premium.headline }}). For a short, curated overview of the site, read {{ "llms.txt" | absURL }} first.
+
+Pages are separated by horizontal rules. Each one starts with its title, canonical URL, and metadata. Views are {{ $author }}'s own and do not represent any employer, client, or vendor. Case studies are anonymized.
+{{ range $pages }}
+---
+
+# {{ .Title }}
+
+- URL: {{ .Permalink }}
+{{- if not .Date.IsZero }}
+- Published: {{ .Date.Format "2006-01-02" }}
+{{- end }}
+{{- with .Params.categories }}
+- Categories: {{ delimit . ", " }}
+{{- end }}
+{{- with .Params.series }}
+- Series: {{ delimit . ", " }}
+{{- end }}
+{{- with .Params.tags }}
+- Tags: {{ delimit . ", " }}
+{{- end }}
+- Summary: {{ partial "llms/summary.html" . }}
+
+{{ partial "llms/markdown.html" . }}
+{{ end -}}

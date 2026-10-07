@@ -1,0 +1,3 @@
+{{- /* One-line plain-text summary of a page, for llms.txt and llms-full.txt. */ -}}
+{{- $s := .Params.summary | default .Description | default .Summary -}}
+{{- return ($s | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace) -}}
