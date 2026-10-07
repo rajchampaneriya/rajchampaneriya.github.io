@@ -75,7 +75,15 @@ Content here.
 
 ## Search
 
-Search page at `hugo-site/content/search.md` uses `layout: "search"`. JSON output enabled in config (`home = ["HTML", "RSS", "JSON"]`).
+Search page at `hugo-site/content/search.md` uses `layout: "search"`. JSON output enabled in config (`home = ["HTML", "RSS", "JSON", "llms", "llmsfull"]`).
+
+## llms.txt (AI agents)
+
+- `/llms.txt` ([llmstxt.org](https://llmstxt.org) format) — profile facts from `params.premium`, projects, and blog posts grouped by category. Template: `hugo-site/layouts/_default/index.llms.txt`
+- `/llms-full.txt` — full text of About, every project, and every published post as clean Markdown. Template: `hugo-site/layouts/_default/index.llmsfull.txt`
+- Both regenerate on every build from front matter; drafts are excluded. A post's `summary` is its one-line description in both files, so keep summaries self-contained.
+- Cleanup of raw HTML/shortcodes for llms-full.txt lives in `hugo-site/layouts/partials/llms/markdown.html` (code fences are left untouched). New shortcodes that take an `alt` should be added to its `[Image: …]` rule.
+- New category: add its urlized name to the `$order` list in `index.llms.txt` to control placement (otherwise it's appended alphabetically).
 
 ## Content Categories (Priority Order)
 

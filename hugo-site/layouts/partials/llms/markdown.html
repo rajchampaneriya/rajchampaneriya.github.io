@@ -1,0 +1,40 @@
+{{- /*
+  Clean Markdown of a page for llms-full.txt.
+  Starts from the page's raw Markdown, resolves or drops shortcodes, then strips
+  the raw HTML layout markup used in content (cards, callouts, grids) outside
+  fenced code blocks, so code samples stay byte-for-byte intact.
+*/ -}}
+{{- $base := strings.TrimSuffix "/" site.BaseURL -}}
+{{- $md := .RawContent -}}
+
+{{- /* Shortcodes */ -}}
+{{- $md = $md | replaceRE `\{\{<\s*imgurl\s+"/?([^"]*)"\s*>\}\}` (printf "%s/${1}" $base) -}}
+{{- $md = $md | replaceRE `\{\{<\s*(?:figure|projectimg)\s.*?\balt="([^"]*)".*?>\}\}` "[Image: ${1}]" -}}
+{{- $md = $md | replaceRE `\{\{<\s*tldr\s*>\}\}` "**TL;DR:**" -}}
+{{- $md = $md | replaceRE `\{\{[<%].*?[>%]\}\}` "" -}}
+
+{{- /* Raw HTML, outside ``` fences only (even-indexed parts of the split) */ -}}
+{{- $block := `div|p|ul|ol|li|dl|dt|dd|h[1-6]|figure|figcaption|aside|section|header|footer|nav|article|blockquote|table|thead|tbody|tfoot|tr|br|hr|details|summary` -}}
+{{- $inline := `a|span|em|i|u|code|small|sup|sub|mark|abbr|cite|kbd|img|picture|source|audio|video|iframe|button|td|th|caption` -}}
+{{- $parts := slice -}}
+{{- range $i, $part := split $md "```" -}}
+  {{- if modBool $i 2 -}}
+    {{- $part = $part
+      | replaceRE `(?s)<!--.*?-->` ""
+      | replaceRE `(?is)<(script|style|svg)\b.*?</(script|style|svg)>` ""
+      | replaceRE `(?s)<a\s[^>]*?href="([^"]*)"[^>]*>(.*?)</a>` "[${2}](${1})"
+      | replaceRE `<img\s[^>]*?alt="([^"]+)"[^>]*>` "[Image: ${1}]"
+      | replaceRE (printf `(?m)^[ \t]+(</?(?:%s|%s|strong|b)\b)` $block $inline) "${1}"
+      | replaceRE `(?s)<dt\b[^>]*>(.*?)</dt>\s*<dd\b[^>]*>(.*?)</dd>` "\n- **${1}:** ${2}\n"
+      | replaceRE `<li\b[^>]*>` "\n- "
+      | replaceRE (printf `</?(?:%s)\b[^>]*>` $block) "\n"
+      | replaceRE `</?(?:strong|b)\b[^>]*>` "**"
+      | replaceRE (printf `</?(?:%s)\b[^>]*>` $inline) ""
+      | replaceRE `(?m)[ \t]+$` ""
+      | replaceRE `\n{3,}` "\n\n"
+      | htmlUnescape
+    -}}
+  {{- end -}}
+  {{- $parts = $parts | append $part -}}
+{{- end -}}
+{{- return (delimit $parts "```" | strings.TrimSpace) -}}

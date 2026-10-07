@@ -1,0 +1,82 @@
+{{- /*
+  /llms.txt — a curated, Markdown-formatted map of the site for LLMs and AI agents.
+  Format: https://llmstxt.org (H1, blockquote summary, free-form notes, H2 link lists).
+  Everything is generated from hugo.toml params and page front matter, so new
+  posts and projects appear automatically. Drafts are excluded by the build.
+*/ -}}
+{{- $p := site.Params.premium -}}
+{{- $author := site.Params.author -}}
+{{- $about := site.GetPage "/about" -}}
+{{- $blog := site.GetPage "/blog" -}}
+{{- $projects := site.GetPage "/projects" -}}
+{{- $posts := where site.RegularPages "Section" "blog" -}}
+{{- $metrics := slice -}}
+{{- range $p.metrics }}{{ $metrics = $metrics | append (printf "%s %s" .value .label) }}{{ end -}}
+{{- $socialNames := dict "github" "GitHub" "linkedin" "LinkedIn" "email" "Email" -}}
+
+# {{ site.Title }}
+
+> {{ site.Title }} is the personal portfolio and publication of {{ $author }}, a {{ $p.headline }} with {{ $p.experience }}. It publishes point-of-view essays, anonymized architecture case studies, and technical deep dives on high-stakes transformations, legacy modernization, cloud-native platforms, and applied AI, written for CTOs, VPs of Engineering, and architecture leaders.
+
+Key facts about {{ $author }}:
+
+- Role: {{ $p.headline }}
+- Positioning: {{ $p.tagline }}
+- Experience: {{ $p.experience }}
+- Industries: {{ delimit $p.industries ", " }}
+- Methodology: {{ $p.methodology }}: {{ delimit $p.methodologyParts " → " }}
+- Track record: {{ delimit $metrics ", " }}
+{{- range site.Params.socialIcons }}
+{{- if ne .name "rss" }}
+- {{ index $socialNames .name | default .name }}: {{ .url | strings.TrimPrefix "mailto:" }}
+{{- end }}
+{{- end }}
+
+Notes for AI agents:
+
+- Views are {{ $author }}'s own and do not represent any employer, client, or vendor. Case studies are anonymized.
+- When citing, use the page title and the canonical URL listed below.
+- The full text of every page listed here is available as Markdown in [llms-full.txt]({{ "llms-full.txt" | absURL }}).
+
+## Start here
+
+- [About {{ $author }}]({{ $about.Permalink }}): {{ partial "llms/summary.html" $about }}
+- [{{ $projects.Title }}]({{ $projects.Permalink }}): {{ partial "llms/summary.html" $projects }}
+- [{{ $blog.Title }}]({{ $blog.Permalink }}): {{ partial "llms/summary.html" $blog }}
+
+## {{ $projects.Title }}
+{{ range $projects.Pages.ByWeight }}
+- [{{ .Title }}]({{ .Permalink }}): {{ partial "llms/summary.html" . }}
+{{- end }}
+
+{{- /* Blog posts grouped by category, in editorial priority order; any other categories follow alphabetically. */}}
+{{- $order := slice "point-of-view" "architecture-work" "architecture-strategy" "technical-concepts" "technology" "technology-strategy" "experience" "industry-experience" -}}
+{{- range $key, $_ := site.Taxonomies.categories }}{{ $key = urlize $key }}{{ if not (in $order $key) }}{{ $order = $order | append $key }}{{ end }}{{ end -}}
+{{- range $order }}
+{{- with site.GetPage (printf "/categories/%s" .) }}
+{{- $term := .Title }}
+{{- with where .Pages "Section" "blog" }}
+
+## {{ $blog.Title }}: {{ $term }}
+{{ range .ByDate.Reverse }}
+- [{{ .Title }}]({{ .Permalink }}): {{ partial "llms/summary.html" . }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- $uncategorized := slice }}
+{{- range $posts.ByDate.Reverse }}{{ if not .Params.categories }}{{ $uncategorized = $uncategorized | append . }}{{ end }}{{ end }}
+{{- with $uncategorized }}
+
+## {{ $blog.Title }}: More
+{{ range . }}
+- [{{ .Title }}]({{ .Permalink }}): {{ partial "llms/summary.html" . }}
+{{- end }}
+{{- end }}
+
+## Optional
+
+- [Full text (llms-full.txt)]({{ "llms-full.txt" | absURL }}): Every page above as clean Markdown in a single file.
+- [RSS feed]({{ "index.xml" | absURL }}): Latest posts with publish dates.
+- [Search index]({{ "index.json" | absURL }}): JSON array of title, permalink, summary, and plain-text content for every page.
+- [Sitemap]({{ "sitemap.xml" | absURL }}): Every URL on the site.

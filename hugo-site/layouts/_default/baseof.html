@@ -9,6 +9,8 @@
     <!-- Meta -->
     <meta name="description" content="{{ .Params.Description | default .Site.Params.Description }}">
     <meta name="theme-color" content="#f5f6f8">
+    <!-- Machine-readable site guide for LLMs and AI agents (https://llmstxt.org) -->
+    <link rel="alternate" type="text/plain" title="llms.txt" href="{{ "llms.txt" | absURL }}">
     {{ $themeInit := resources.Get "js/theme-init.js" }}
     {{ if $themeInit }}<script src="{{ ($themeInit | minify | fingerprint).RelPermalink }}"></script>{{ end }}
 
