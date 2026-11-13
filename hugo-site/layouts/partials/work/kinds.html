@@ -1,0 +1,23 @@
+{{- /*
+  The reader-intent "kinds" that organise everything on /work/, in display order.
+  One list drives the filter chips, the badge on every card, the kind link on
+  article pages and the headings in llms.txt, so they can never disagree.
+
+  key    — value used in data-kind attributes and the ?kind= URL parameter
+  label  — singular, shown on a card or article
+  plural — shown on the filter chip and in llms.txt headings
+  cta    — link text on a card
+  blurb  — one line telling the reader what they will find
+*/ -}}
+{{- return (slice
+  (dict "key" "case-study" "label" "Case study" "plural" "Case studies" "cta" "Read the case study"
+        "blurb" "Real engagements and decision records: the problem, the trade-offs and the measured result.")
+  (dict "key" "build" "label" "Build" "plural" "Builds" "cta" "Open the build"
+        "blurb" "Working systems with code, diagrams and the reasoning behind each choice.")
+  (dict "key" "pov" "label" "Point of view" "plural" "Points of view" "cta" "Read the argument"
+        "blurb" "Opinions on engineering, AI and careers, argued from experience.")
+  (dict "key" "deep-dive" "label" "Deep dive" "plural" "Deep dives" "cta" "Read the deep dive"
+        "blurb" "One technology or concept explained properly, with the enterprise angle.")
+  (dict "key" "industry" "label" "Industry notes" "plural" "Industry notes" "cta" "Read the notes"
+        "blurb" "A sector studied from the ground up: how it makes money, what it measures, where technology fits.")
+) -}}

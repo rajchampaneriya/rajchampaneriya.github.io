@@ -1,0 +1,36 @@
+{{- /*
+  Returns the kind (one entry from work/kinds.html) for a page.
+
+  A page can set `kind: "<key>"` in front matter. Otherwise the kind is derived
+  from what the page already declares, so existing content needs no edits:
+
+    category starting with "industry"                         → industry
+    lives under /projects/                                    → build
+    tag "case-study", or category Architecture Work/Strategy  → case-study
+    category Point of View or Experience                      → pov
+    anything else (Technical Concepts, Technology, …)         → deep-dive
+*/ -}}
+{{- $kinds := partialCached "work/kinds.html" . "kinds" -}}
+{{- $cats := slice -}}
+{{- range (.Params.categories | default slice) }}{{ $cats = $cats | append (urlize .) }}{{ end -}}
+{{- $tags := slice -}}
+{{- range (.Params.tags | default slice) }}{{ $tags = $tags | append (urlize .) }}{{ end -}}
+{{- $industry := false -}}
+{{- range $cats }}{{ if hasPrefix . "industry" }}{{ $industry = true }}{{ end }}{{ end -}}
+
+{{- $key := "deep-dive" -}}
+{{- if .Params.kind -}}
+  {{- $key = .Params.kind -}}
+{{- else if $industry -}}
+  {{- $key = "industry" -}}
+{{- else if eq .Section "projects" -}}
+  {{- $key = "build" -}}
+{{- else if or (in $tags "case-study") (in $cats "architecture-work") (in $cats "architecture-strategy") -}}
+  {{- $key = "case-study" -}}
+{{- else if or (in $cats "point-of-view") (in $cats "experience") -}}
+  {{- $key = "pov" -}}
+{{- end -}}
+
+{{- $match := index (where $kinds "key" "deep-dive") 0 -}}
+{{- range where $kinds "key" $key }}{{ $match = . }}{{ end -}}
+{{- return $match -}}

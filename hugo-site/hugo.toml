@@ -108,17 +108,13 @@ enableRobotsTXT = true
 
 # Menu configuration
 [menu]
+  # One entry for everything a reader can open. Posts (/blog/...) and projects
+  # (/projects/...) keep their own URLs but are listed together on /work/.
   [[menu.main]]
-    identifier = "blog"
-    name = "Insights"
-    url = "/blog/"
+    identifier = "work"
+    name = "Work"
+    url = "/work/"
     weight = 10
-
-  [[menu.main]]
-    identifier = "projects"
-    name = "Architecture Blueprints"
-    url = "/projects/"
-    weight = 20
 
   [[menu.main]]
     identifier = "about"

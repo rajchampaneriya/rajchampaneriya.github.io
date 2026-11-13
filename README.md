@@ -20,8 +20,9 @@ cd hugo-site && hugo --gc --minify
 ## Content Structure
 
 - **Blog**: `hugo-site/content/blog/YYYY/MM/slug.md`
-- **Projects**: `hugo-site/content/projects/slug.md`
+- **Projects**: `hugo-site/content/projects/slug/_index.md`
 - **Categories**: Point of View, Architecture Work, Technical Concepts, Technology, Experience, Industry Experience
+- **Work hub**: posts and projects are listed together on `/work/`, filtered by kind (case studies, builds, points of view, deep dives, industry notes). `/blog/` and `/projects/` redirect there.
 
 ## Stack
 

@@ -1,0 +1,41 @@
+{{- /*
+  Returns what a page needs to know about the series it belongs to
+  (first entry of its `series` front matter), or a dict with name "" if none.
+
+    name, slug   — the series
+    parts        — published posts in the series, in reading order (weight, then date)
+    hub          — the page under /projects/ that declares the same series, if any;
+                   it acts as the series' home
+    isHub        — this page is that hub
+    index, total — position of this page among the parts (index 0 for the hub)
+    prev, next   — neighbouring parts
+    collapsed    — true when the series has a hub and 4+ parts: /work/ then shows
+                   the hub once, with the parts tucked inside it, instead of a card each
+*/ -}}
+{{- $page := . -}}
+{{- $out := dict "name" "" "collapsed" false "isHub" false -}}
+{{- with index (.Params.series | default slice) 0 -}}
+  {{- $name := . -}}
+  {{- $parts := where (where site.RegularPages "Section" "blog") "Params.series" "intersect" (slice $name) -}}
+  {{- $parts = $parts.ByWeight -}}
+  {{- $hub := false -}}
+  {{- with site.GetPage "/projects" -}}
+    {{- range .Sections }}{{ if in (.Params.series | default slice) $name }}{{ $hub = . }}{{ end }}{{ end -}}
+  {{- end -}}
+  {{- $index := 0 -}}
+  {{- $prev := false -}}
+  {{- $next := false -}}
+  {{- range $i, $p := $parts -}}
+    {{- if eq $p $page -}}
+      {{- $index = add $i 1 -}}
+      {{- if gt $i 0 }}{{ $prev = index $parts (sub $i 1) }}{{ end -}}
+      {{- if lt (add $i 1) (len $parts) }}{{ $next = index $parts (add $i 1) }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $isHub := and $hub (eq $hub $page) -}}
+  {{- $out = dict
+        "name" $name "slug" (urlize $name) "parts" $parts "total" (len $parts)
+        "hub" $hub "isHub" $isHub "index" $index "prev" $prev "next" $next
+        "collapsed" (and $hub (ge (len $parts) 4)) -}}
+{{- end -}}
+{{- return $out -}}

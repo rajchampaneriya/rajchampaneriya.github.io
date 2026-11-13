@@ -1,0 +1,51 @@
+{{- /*
+  Where to go after an article or project: up to three suggestions and a way
+  back to everything. Order of preference:
+    1. the next part of the same series (or part 1, when this page is the series hub)
+    2. the series hub
+    3. the newest other items of the same kind
+    4. the newest items of any kind
+*/ -}}
+{{- $page := . -}}
+{{- $kind := partial "work/kind.html" . -}}
+{{- $series := partial "work/series.html" . -}}
+{{- $picks := slice -}}
+{{- $seen := slice $page.RelPermalink -}}
+
+{{- if $series.name -}}
+  {{- if $series.isHub -}}
+    {{- with index $series.parts 0 }}{{ $picks = $picks | append (dict "page" . "why" "Start with part 1") }}{{ $seen = $seen | append .RelPermalink }}{{ end -}}
+  {{- else -}}
+    {{- with $series.next }}{{ $picks = $picks | append (dict "page" . "why" "Next in this series") }}{{ $seen = $seen | append .RelPermalink }}{{ end -}}
+    {{- with $series.hub }}{{ $picks = $picks | append (dict "page" . "why" "The whole series") }}{{ $seen = $seen | append .RelPermalink }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $list := (partial "work/items.html" .).list -}}
+{{- range $list -}}
+  {{- if and (lt (len $picks) 3) (not (in $seen .RelPermalink)) (eq (partial "work/kind.html" .).key $kind.key) -}}
+    {{- $picks = $picks | append (dict "page" . "why" (printf "More %s" (lower $kind.plural))) -}}
+    {{- $seen = $seen | append .RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+{{- range $list -}}
+  {{- if and (lt (len $picks) 3) (not (in $seen .RelPermalink)) -}}
+    {{- $picks = $picks | append (dict "page" . "why" (partial "work/kind.html" .).label) -}}
+    {{- $seen = $seen | append .RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $picks }}
+<nav class="keep-reading" aria-labelledby="keep-reading-title">
+    <h2 class="keep-reading__title" id="keep-reading-title">Keep reading</h2>
+    <ul class="keep-reading__list">
+        {{- range . }}
+        <li class="keep-reading__item">
+            <span class="keep-reading__why">{{ .why }}</span>
+            <a href="{{ .page.RelPermalink }}">{{ .page.Title }}</a>
+        </li>
+        {{- end }}
+    </ul>
+    <a class="keep-reading__all" href="{{ "work/" | relURL }}">Browse all work →</a>
+</nav>
+{{- end }}

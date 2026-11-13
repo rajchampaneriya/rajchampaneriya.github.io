@@ -16,6 +16,8 @@ weight: 1
 ShowToc: true
 disclaimer: true
 audioTitle: "Stock Market Simulator"
+# Articles that share this series are listed on this project's card on /work/.
+series: ["Stock Market Simulator"]
 ---
 
 <div class="content-callout">

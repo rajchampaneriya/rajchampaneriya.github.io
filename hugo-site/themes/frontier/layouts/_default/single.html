@@ -35,6 +35,11 @@
             <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
             <span>•</span>
             <span>{{ .ReadingTime }} min read</span>
+            {{ if in (slice "blog" "projects") .Section }}
+            {{ $kind := partial "work/kind.html" . }}
+            <span>•</span>
+            <a href="{{ "work/" | relURL }}?kind={{ $kind.key }}" class="work-kind work-kind--{{ $kind.key }}" aria-label="More {{ lower $kind.plural }}">{{ $kind.label }}</a>
+            {{ end }}
             {{ if $audioResource }}
             <span>•</span>
             <button class="btn-text listen-btn" onclick="playAudio('{{ $audioSrc }}', '{{ $audioTitle }}')">
@@ -61,6 +66,7 @@
         {{ with .Params.description }}
         <p class="post-description">{{ . }}</p>
         {{ end }}
+        {{ if in (slice "blog" "projects") .Section }}{{ partial "work/series-nav.html" . }}{{ end }}
     </header>
 
     {{ if .Params.disclaimer }}
@@ -78,10 +84,11 @@
         {{ with .Params.tags }}
         <div class="tags">
             {{ range . }}
-            <a href="{{ "/blog/" | relLangURL }}?tag={{ . | urlize }}" class="tag">#{{ . }}</a>
+            <a href="{{ "/work/" | relLangURL }}?tag={{ . | urlize }}" class="tag">#{{ . }}</a>
             {{ end }}
         </div>
         {{ end }}
+        {{ if in (slice "blog" "projects") .Section }}{{ partial "work/keep-reading.html" . }}{{ end }}
     </footer>
 </article>
 {{ end }}

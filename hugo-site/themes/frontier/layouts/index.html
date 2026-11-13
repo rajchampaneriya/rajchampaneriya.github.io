@@ -125,28 +125,16 @@
         </div>
     </section>
 
-    <!-- Content Feed -->
-    <section class="latest-feed scroll-reveal">
-        <h2 class="section-title">Strategic Insights</h2>
+    <!-- Latest work: posts and projects together, long series folded into one card -->
+    <section class="latest-feed scroll-reveal" id="latest-work">
+        <h2 class="section-title">Latest work</h2>
         <div class="feed-grid">
-            {{ $pages := (where .Site.RegularPages "Type" "in" .Site.Params.mainSections).ByDate.Reverse }}
-            {{ range $idx, $p := first 5 $pages }}
-            <article class="feed-card surface-panel scroll-reveal scroll-reveal--delay-{{ add $idx 1 }}">
-                <div class="card-content">
-                    <div class="card-meta">
-                        <span class="card-date">{{ $p.Date.Format "Jan 2, 2006" }}</span>
-                        {{ with $p.Params.categories }}
-                        <span class="card-category">{{ index . 0 }}</span>
-                        {{ end }}
-                    </div>
-                    <h3><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
-                    <p>{{ $p.Summary | truncate 120 }}</p>
-                </div>
-            </article>
+            {{ range $idx, $p := first 5 (partial "work/items.html" .).list }}
+            {{ partial "work/card.html" (dict "page" $p "heading" "h3" "delay" (add $idx 1)) }}
             {{ end }}
         </div>
         <div class="view-all scroll-reveal scroll-reveal--delay-6">
-            <a href="{{ "/blog/" | absLangURL }}" class="btn btn-text">View All Insights →</a>
+            <a href="{{ "/work/" | absLangURL }}" class="btn btn-text">Browse all work →</a>
         </div>
     </section>
 </div>
