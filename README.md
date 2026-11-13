@@ -1,6 +1,6 @@
-# rajc.work — Technical Solutions & Thought Leadership
+# rajc.work — Forward Deployed Engineer
 
-Technical Solution Architect for High-Stakes Transformations — Architecture That Protects Careers and Accelerates Transformations
+Raj Champaneriya, Forward Deployed Engineer: embedded with enterprise teams, from ambiguous brief to production. Case studies, builds and writing.
 
 Hugo site deployed to GitHub Pages. Built with the Frontier theme.
 

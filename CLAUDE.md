@@ -104,7 +104,7 @@ The CARE section on the home page is a scroll-driven canvas story: copy steps sc
 
 ## Brand & Voice
 
-- **Positioning**: Technical Solution Architect for Fortune 500 high-stakes transformations
+- **Positioning**: Forward Deployed Engineer: embedded with enterprise teams, from ambiguous brief to production, on Fortune 500 high-stakes transformations
 - **Tone**: Executive-grade, authoritative, quantified
 - **Methodology**: "The CARE Architecture Method" (Clarity, Alignment, Reality, Execution)
 - **Audience**: CTOs, VPs of Engineering — not junior devs

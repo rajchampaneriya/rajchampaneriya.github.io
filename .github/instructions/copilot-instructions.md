@@ -6,10 +6,10 @@ applyTo: "**"
 
 ## Site Identity & Positioning
 
-**rajc.work** is the digital presence of **Raj Champaneriya**, an Technical Solution Architect specializing in high-stakes enterprise transformations for Fortune 500 clients.
+**rajc.work** is the digital presence of **Raj Champaneriya**, a Forward Deployed Engineer who embeds with enterprise teams to turn ambiguous, high-stakes problems into production systems for Fortune 500 clients.
 
 ### Positioning Statement
-This site must communicate **"elite strategic advisor"** — not "mid-level consultant" or "technical blogger." Every piece of content, visual choice, and interaction should reinforce top 1% technical solution architect positioning.
+This site must communicate **"elite strategic advisor"** — not "mid-level consultant" or "technical blogger." Every piece of content, visual choice, and interaction should reinforce top 1% forward deployed engineer positioning: in the room, in the code, accountable for the result.
 
 ### Brand Voice
 - **Executive-grade language**: Use terms like "boardroom," "stakeholder alignment," "career protection," "strategic de-risking," "high-stakes transformations"
@@ -18,8 +18,8 @@ This site must communicate **"elite strategic advisor"** — not "mid-level cons
 - **Named methodology**: Reference "The CARE Architecture Method" (Clarity, Alignment, Reality, Execution) when discussing approach
 
 ### Headline & Tagline
-- **Headline**: "Technical Solution Architect for High-Stakes Transformations"
-- **Tagline**: "Technical Solutions That Protect Careers and Accelerates Transformations"
+- **Headline**: "Forward Deployed Engineer"
+- **Tagline**: "Embedded with enterprise teams, from ambiguous brief to production"
 
 ### Target Audience
 - CTOs, VPs of Engineering, technology leaders making seven-figure architecture decisions
@@ -42,7 +42,7 @@ This site must communicate **"elite strategic advisor"** — not "mid-level cons
 - Reference real impact metrics when possible
 
 ### Authority Signals to Include
-1. **Technical Solution Architect** — prominent brand association
+1. **Forward Deployed Engineer** — prominent brand association
 2. **Quantified Experience**: "13+ years across 4 Fortune 500 industries"
 3. **Certifications**: Azure AI Engineer (AI-102), AWS Solutions Architect, Microsoft C# Specialist
 4. **Industry Domains**: Healthcare, Property Insurance, Media & Entertainment, Logistics
