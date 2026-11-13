@@ -85,45 +85,9 @@
         </div>
     </section>
 
-    <!-- CARE Method Teaser — open layout, no card wrapper -->
-    <section class="care-teaser scroll-reveal">
-        <div class="care-teaser__layout">
-            <div class="care-teaser__heading">
-                <h2 class="care-teaser__title">The CARE Architecture Method</h2>
-                <p class="care-teaser__subtitle">A proven framework for high-stakes enterprise transformations</p>
-            </div>
-            <div class="care-teaser__steps">
-                <div class="care-step care-step--clarity scroll-reveal scroll-reveal--delay-1">
-                    <span class="care-step__letter-wrap" aria-hidden="true"><span class="care-step__letter">C</span></span>
-                    <div class="care-step__text">
-                        <span class="care-step__word">Clarity</span>
-                        <span class="care-step__desc">Decompose ambiguity into actionable decisions</span>
-                    </div>
-                </div>
-                <div class="care-step care-step--alignment scroll-reveal scroll-reveal--delay-2">
-                    <span class="care-step__letter-wrap" aria-hidden="true"><span class="care-step__letter">A</span></span>
-                    <div class="care-step__text">
-                        <span class="care-step__word">Alignment</span>
-                        <span class="care-step__desc">Map technical direction to business outcomes</span>
-                    </div>
-                </div>
-                <div class="care-step care-step--reality scroll-reveal scroll-reveal--delay-3">
-                    <span class="care-step__letter-wrap" aria-hidden="true"><span class="care-step__letter">R</span></span>
-                    <div class="care-step__text">
-                        <span class="care-step__word">Reality</span>
-                        <span class="care-step__desc">Validate through prototypes &amp; decision frameworks</span>
-                    </div>
-                </div>
-                <div class="care-step care-step--execution scroll-reveal scroll-reveal--delay-4">
-                    <span class="care-step__letter-wrap" aria-hidden="true"><span class="care-step__letter">E</span></span>
-                    <div class="care-step__text">
-                        <span class="care-step__word">Execution</span>
-                        <span class="care-step__desc">Deliver with zero critical defects</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- CARE scroll story: the method, then the method at work on real engagements.
+         Steps scroll past a pinned canvas; see layouts/partials/care-story.html. -->
+    {{ partial "care-story.html" . }}
 
     <!-- Latest work: posts and projects together, long series folded into one card -->
     <section class="latest-feed scroll-reveal" id="latest-work">

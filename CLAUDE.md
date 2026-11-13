@@ -9,6 +9,7 @@
 - **Theme layouts**: `hugo-site/themes/frontier/layouts/`
 - **Site layouts**: `hugo-site/layouts/` (overrides theme)
 - **Everything a reader can open**: listed on `/work/` (posts and projects together); see "Work hub"
+- **Home page scroll story**: see "Scroll story"
 - **Build**: `cd hugo-site && hugo --gc --minify`
 - **Dev server**: `cd hugo-site && hugo server -D`
 
@@ -76,7 +77,30 @@ Posts (`/blog/...`) and projects (`/projects/...`) keep their own URLs but are l
 - **Series**: posts that share `series: ["Name"]` get "Part N of M" navigation. If a project page declares the same `series`, it becomes the series' home; with 4+ parts the series is folded into that one card on `/work/` (the parts still turn up in search and topic filters).
 - **Shareable filters**: `/work/?kind=build`, `/work/?tag=architecture`, `/work/?q=migration`. Tag links on articles and the tag/category/series pages point here.
 - **Files**: `layouts/section/work.html`, `layouts/partials/work/*.html`, `themes/frontier/assets/js/work-hub.js`, `assets/css/extended/work-hub.css`. Site search (`index.json`) and `llms.txt` use the same collection.
-- **Tests**: `hugo-site/tests/work-hub.spec.js` (Playwright, Given/When/Then).
+- **Tests**: `hugo-site/tests/work-hub.spec.js`, `hugo-site/tests/care-story.spec.js` (Playwright, Given/When/Then).
+
+## Scroll story (home page)
+
+The CARE section on the home page is a scroll-driven canvas story: copy steps scroll past a pinned stage. Scroll picks a keyframe, a playhead travels toward it, and the canvas is drawn as a function of the playhead (so scrolling up rewinds it). Read the header comment in `themes/frontier/assets/js/care-story.js` before changing it.
+
+- **CARE copy**: `[params.care]` in `hugo.toml` (question, intro, outro, and the four steps).
+- **"CARE in the field" steps**: any post or project with a `story:` block, ordered by `order`, at most four:
+
+  ```yaml
+  story:
+    order: 1
+    title: "Short title for the stage card"      # optional, defaults to the page title
+    metric: "99.95%"                             # the headline figure; must come from the page itself
+    metricLabel: "uptime held through a zero-downtime cutover"
+    care:                                        # optional; one line per move, lights up C·A·R·E on the card
+      clarity: "..."
+      alignment: "..."
+      reality: "..."
+      execution: "..."
+  ```
+- **Files**: `layouts/partials/care-story.html`, `themes/frontier/assets/js/care-story.js`, `assets/css/extended/care-story.css`.
+- **Tuning**: open `/?story=debug` to see the reading line, step position, goal keyframe and playhead live.
+- Features that live inside `#swup` must start from `app.js` on `DOMContentLoaded` and on Swup's `page:view` (inline scripts in swapped content do not run), and clean up after themselves.
 
 ## Brand & Voice
 

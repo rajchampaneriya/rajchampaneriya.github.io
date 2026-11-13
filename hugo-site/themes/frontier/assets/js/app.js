@@ -341,6 +341,7 @@ swup.hooks.on('page:view', () => { initDesktopAudioTrigger(); });
 import './audio-player.js';
 import './ai-chat.js';
 import { runScrollspy } from './scrollspy.js';
+import { initCareStory } from './care-story.js';
 import { initWorkHub } from './work-hub.js';
 
 document.addEventListener('DOMContentLoaded', runScrollspy);
@@ -348,10 +349,11 @@ if (window.swup && window.swup.hooks) {
   window.swup.hooks.on('page:view', () => requestAnimationFrame(runScrollspy));
 }
 
-// ------------------ Work hub filters (/work/) ------------------
-// Looks for its own root element and does nothing on pages that lack it. Inline scripts in
-// swapped content do not run under Swup, so it starts here: on first load and after every visit.
+// ------------------ CARE scroll story (home) and Work hub filters (/work/) ------------------
+// Both look for their own root element and do nothing on pages that lack it. Inline scripts in
+// swapped content do not run under Swup, so they start here: on first load and after every visit.
 function initPageFeatures() {
+  initCareStory();
   initWorkHub();
 }
 document.addEventListener('DOMContentLoaded', initPageFeatures);

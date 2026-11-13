@@ -1,0 +1,83 @@
+{{- /*
+  The CARE scroll story (home page).
+
+  Copy scrolls past a pinned canvas "stage". Each step carries data-kf, the
+  keyframe the stage should show while that step is being read; care-story.js
+  finds the step under the reading line, moves a playhead toward its keyframe
+  and draws the canvas as a function of that playhead. Scrolling back up plays
+  the same story in reverse.
+
+  Where the words come from:
+    - The four CARE steps: [params.care] in hugo.toml.
+    - "CARE in the field" steps: any post or project with a `story:` block in
+      its front matter (see partials/work/story-items.html and CLAUDE.md).
+      The stage card reads its title, figure and caption from the data-story-*
+      attributes below, so the copy has one home.
+
+  Without JavaScript the stage stays hidden and this is a plain, readable list.
+*/ -}}
+{{- $care := site.Params.care -}}
+{{- $items := partial "work/story-items.html" . -}}
+{{- $letters := dict "clarity" "C" "alignment" "A" "reality" "R" "execution" "E" -}}
+<section class="care-story" id="care" data-care-story aria-labelledby="care-story-title">
+    <div class="care-story__stage" data-care-stage aria-hidden="true">
+        <div class="care-story__frame">
+            <canvas data-care-canvas></canvas>
+        </div>
+    </div>
+
+    <div class="care-story__steps">
+        <header class="care-story__step care-story__step--intro" data-kf="0">
+            <p class="care-story__eyebrow">{{ site.Params.premium.methodology }}</p>
+            <h2 id="care-story-title" class="care-story__question">{{ $care.question | markdownify }}</h2>
+            <p>{{ $care.intro }}</p>
+            <a href="#latest-work" class="care-story__skip">Skip to the latest work ↓</a>
+        </header>
+
+        {{- range $i, $step := $care.steps }}
+        <article class="care-story__step care-story__step--{{ lower $step.word }}" data-kf="{{ add $i 1 }}">
+            <h3 class="care-story__heading">
+                <span class="care-badge care-badge--{{ lower $step.word }}" aria-hidden="true">{{ substr $step.word 0 1 }}</span>
+                {{ $step.word }}
+            </h3>
+            <p class="care-story__promise">{{ $step.promise }}</p>
+            <p>{{ $step.detail }}</p>
+        </article>
+        {{- end }}
+
+        {{- range $i, $page := $items }}
+        {{- $story := $page.Params.story -}}
+        {{- $kind := partial "work/kind.html" $page -}}
+        <article class="care-story__step care-story__step--field" data-kf="{{ add (len $care.steps) (add $i 1) }}"
+                 data-story-kind="{{ $kind.label }}"
+                 data-story-title="{{ $story.title | default $page.Title }}"
+                 data-story-metric="{{ $story.metric }}"
+                 data-story-metric-label="{{ $story.metricLabel }}"
+                 {{- if $story.care }} data-story-care{{ end }}>
+            <p class="care-story__eyebrow">CARE in the field · {{ $kind.label }}</p>
+            <h3 class="care-story__heading"><a href="{{ $page.RelPermalink }}">{{ $story.title | default $page.Title }}</a></h3>
+            {{- with $story.care }}
+            <ul class="care-story__chain">
+                {{- range $key := slice "clarity" "alignment" "reality" "execution" }}
+                {{- with index $story.care $key }}
+                <li><span class="care-badge care-badge--sm care-badge--{{ $key }}" aria-hidden="true">{{ index $letters $key }}</span><span><span class="care-story__sr">{{ $key | title }}: </span>{{ . }}</span></li>
+                {{- end }}
+                {{- end }}
+            </ul>
+            {{- else }}
+            <p>{{ partial "llms/summary.html" $page | truncate 190 }}</p>
+            {{- end }}
+            <p class="care-story__result"><strong>{{ $story.metric }}</strong> {{ $story.metricLabel }}</p>
+            <a href="{{ $page.RelPermalink }}" class="btn-text care-story__link" aria-label="{{ $kind.cta }}: {{ $page.Title }}">{{ $kind.cta }} →</a>
+        </article>
+        {{- end }}
+
+        <footer class="care-story__outro">
+            <p>{{ $care.outro }}</p>
+            <div class="care-story__actions">
+                <a href="{{ "work/" | relURL }}?kind=case-study" class="btn btn-primary">See the case studies</a>
+                <a href="{{ "work/" | relURL }}" class="btn btn-text">Browse all work</a>
+            </div>
+        </footer>
+    </div>
+</section>

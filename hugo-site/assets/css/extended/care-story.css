@@ -1,0 +1,338 @@
+/* ============================================
+   CARE SCROLL STORY (home page)
+   Markup: layouts/partials/care-story.html
+   Script: themes/frontier/assets/js/care-story.js
+
+   The copy steps scroll past a `position: sticky` stage that holds a canvas.
+   Everything below `.care-story--live` only applies once the script has
+   started; without JavaScript the stage stays hidden and the steps read as a
+   plain list.
+   ============================================ */
+
+.care-story {
+    /* One colour per CARE step, shared by the letter badges and the canvas. */
+    --care-c: hsl(215, 65%, 45%);
+    --care-a: hsl(160, 55%, 36%);
+    --care-r: hsl(25, 78%, 46%);
+    --care-e: hsl(270, 50%, 52%);
+    --care-grid: hsla(220, 30%, 12%, 0.07);
+    /* Height of the sticky site header; care-story.js replaces it with the measured value. */
+    --care-header: var(--header-height, 56px);
+    position: relative;
+    margin-top: var(--space-xl);
+    scroll-margin-top: var(--header-height, 56px);
+}
+
+[data-theme="dark"] .care-story {
+    --care-c: hsl(215, 80%, 66%);
+    --care-a: hsl(160, 58%, 52%);
+    --care-r: hsl(25, 85%, 62%);
+    --care-e: hsl(270, 68%, 72%);
+    --care-grid: hsla(220, 20%, 94%, 0.07);
+}
+
+/* ----- Stage ----- */
+
+.care-story__stage {
+    display: none;
+}
+
+.care-story--live .care-story__stage {
+    display: block;
+    position: sticky;
+    top: var(--care-header);
+    z-index: 2;
+    height: clamp(15rem, 38vh, 21rem);
+    padding: var(--space-xs) 0;
+    /* Opaque, so the copy scrolling underneath never shows through. */
+    background: var(--color-bg);
+}
+
+.care-story__frame {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    background-color: var(--color-surface);
+    background-image: radial-gradient(var(--care-grid) 1px, transparent 1px);
+    background-size: 14px 14px;
+}
+
+.care-story__frame canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ----- Steps ----- */
+
+.care-story__step {
+    padding: var(--space-md) 0;
+}
+
+.care-story--live .care-story__step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 44vh;
+    opacity: 0.35;
+    transition: opacity var(--transition-slow);
+}
+
+.care-story--live .care-story__step.is-active {
+    opacity: 1;
+}
+
+.care-story__eyebrow {
+    margin: 0 0 var(--space-xs);
+    font-size: var(--text-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-meta);
+}
+
+.care-story__question {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--text-2xl);
+    line-height: var(--leading-tight);
+    text-wrap: balance;
+}
+
+.care-story__question strong {
+    font-weight: inherit;
+    color: var(--color-brand);
+}
+
+.care-story__heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: 0 0 var(--space-xs);
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+}
+
+.care-story__heading a {
+    color: var(--color-text-main);
+}
+
+.care-story__heading a:hover {
+    color: var(--color-brand);
+}
+
+.care-story__promise {
+    margin: 0 0 var(--space-xs);
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    color: var(--color-text-main);
+}
+
+.care-story__step p {
+    max-width: 34rem;
+    margin-bottom: var(--space-xs);
+    font-size: var(--text-base);
+}
+
+.care-story__skip {
+    align-self: flex-start;
+    margin-top: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-brand);
+}
+
+.care-story__skip:hover {
+    color: var(--color-brand-dim);
+}
+
+/* Letter badge: C, A, R, E */
+.care-badge {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: var(--fw-bold);
+    line-height: 1;
+    color: var(--color-bg);
+    background: var(--care-c);
+}
+
+.care-badge--alignment { background: var(--care-a); }
+.care-badge--reality { background: var(--care-r); }
+.care-badge--execution { background: var(--care-e); }
+
+.care-badge--sm {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.15em;
+    border-radius: var(--radius-xs);
+    font-size: 0.8125rem;
+}
+
+/* "CARE in the field": what each move looked like on a real engagement */
+.care-story__chain {
+    display: grid;
+    gap: var(--space-xs);
+    max-width: 34rem;
+    margin: var(--space-xs) 0 var(--space-sm);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
+    color: var(--color-text-muted);
+}
+
+.care-story__chain li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xs);
+}
+
+.care-story__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.care-story__step .care-story__result {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+/* The stage card already shows the figure; the line is for the no-JavaScript list. */
+.care-story--live .care-story__result {
+    display: none;
+}
+
+.care-story__result strong {
+    margin-right: var(--space-2xs);
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    color: var(--color-brand);
+}
+
+.care-story__link {
+    align-self: flex-start;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--color-brand);
+}
+
+.care-story__link:hover {
+    color: var(--color-brand-dim);
+}
+
+.care-story__outro {
+    padding: var(--space-lg) 0 var(--space-md);
+}
+
+.care-story__outro p {
+    max-width: 34rem;
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    color: var(--color-text-main);
+}
+
+.care-story__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.care-story__actions .btn {
+    padding: var(--space-xs) var(--space-md);
+}
+
+.care-story__actions .btn-text {
+    color: var(--color-brand);
+}
+
+#latest-work {
+    scroll-margin-top: calc(var(--header-height, 56px) + var(--space-sm));
+}
+
+/* ----- Wide screens (1024px+, the same breakpoint as WIDE in care-story.js):
+         copy on the left, stage pinned in the middle of the window on the right ----- */
+@media screen and (min-width: 1024px) {
+    .care-story--live {
+        display: grid;
+        grid-template-columns: minmax(20rem, 0.85fr) minmax(0, 1.15fr);
+        column-gap: var(--space-xl);
+    }
+
+    .care-story--live .care-story__steps {
+        grid-column: 1;
+        grid-row: 1;
+        /* Keeps the stage pinned until the last step has reached the reading line. */
+        padding-bottom: 14vh;
+    }
+
+    .care-story--live .care-story__stage {
+        --care-stage-h: min(68vh, 36rem);
+        grid-column: 2;
+        grid-row: 1;
+        align-self: start;
+        top: calc(var(--care-header) + (100vh - var(--care-header) - var(--care-stage-h)) / 2);
+        height: var(--care-stage-h);
+        margin: 10vh 0;
+        padding: 0;
+        background: none;
+    }
+
+    .care-story--live .care-story__step {
+        min-height: 42vh;
+    }
+
+    .care-story--live .care-story__step--intro {
+        min-height: 62vh;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .care-story--live .care-story__step {
+        transition: none;
+    }
+}
+
+/* ----- ?story=debug overlay: the reading line and the numbers behind the animation ----- */
+.care-story__line {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: var(--z-scroll-top);
+    height: 0;
+    border-top: 1px dashed hsl(350, 90%, 62%);
+    pointer-events: none;
+}
+
+.care-story__hud {
+    position: fixed;
+    left: var(--space-xs);
+    top: calc(var(--care-header) + var(--space-xs));
+    z-index: var(--z-scroll-top);
+    margin: 0;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font: 12px/1.5 var(--font-mono);
+    white-space: pre;
+    color: hsl(220, 20%, 94%);
+    background: hsla(220, 25%, 7%, 0.86);
+    pointer-events: none;
+}

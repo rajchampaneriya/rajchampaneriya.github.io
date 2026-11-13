@@ -89,6 +89,32 @@ enableRobotsTXT = true
       icon = "cost"
 
 
+  # The CARE scroll story on the home page (layouts/partials/care-story.html).
+  # Each step is one beat of the story: the copy scrolls past while the pinned
+  # canvas animates to match. "CARE in the field" beats come from posts and
+  # projects that carry a `story:` block in their front matter.
+  [params.care]
+    question = "How does an ambiguous, high-stakes brief become **a result you can measure**?"
+    intro = "Four moves, in the same order on every engagement. Scroll to see each one, then the method at work in the field."
+    outro = "That is CARE: a repeatable path from an unclear brief to a measured result."
+
+    [[params.care.steps]]
+      word = "Clarity"
+      promise = "Decompose ambiguity into actionable decisions"
+      detail = "Start with questions, not diagrams. Where is the operational risk, where are the seams, and what would count as success?"
+    [[params.care.steps]]
+      word = "Alignment"
+      promise = "Map technical direction to business outcomes"
+      detail = "Put the cost of every option on the table, so product, engineering, platform and delivery leaders back the same path."
+    [[params.care.steps]]
+      word = "Reality"
+      promise = "Validate through prototypes & decision frameworks"
+      detail = "Treat every assumption as a claim to test. Working software and evidence decide what scales, not opinion."
+    [[params.care.steps]]
+      word = "Execution"
+      promise = "Deliver with zero critical defects"
+      detail = "Ship in small, reversible slices, instrument each one, and expand only when the evidence supports the next step."
+
   # Social links
   [[params.socialIcons]]
     name = "github"

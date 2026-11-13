@@ -23,6 +23,7 @@ cd hugo-site && hugo --gc --minify
 - **Projects**: `hugo-site/content/projects/slug/_index.md`
 - **Categories**: Point of View, Architecture Work, Technical Concepts, Technology, Experience, Industry Experience
 - **Work hub**: posts and projects are listed together on `/work/`, filtered by kind (case studies, builds, points of view, deep dives, industry notes). `/blog/` and `/projects/` redirect there.
+- **Home page scroll story**: the CARE method as a scroll-driven canvas animation; copy in `hugo.toml` (`[params.care]`), field examples from `story:` front matter. See `CLAUDE.md`.
 
 ## Stack
 

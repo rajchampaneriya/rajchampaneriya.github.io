@@ -18,6 +18,11 @@ disclaimer: true
 audioTitle: "Stock Market Simulator"
 # Articles that share this series are listed on this project's card on /work/.
 series: ["Stock Market Simulator"]
+# Home page scroll story ("CARE in the field"). See CLAUDE.md → "Scroll story".
+story:
+  order: 3
+  metric: "<100 ms"
+  metricLabel: "latency, streaming live market data to the browser"
 ---
 
 <div class="content-callout">
