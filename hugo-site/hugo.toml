@@ -124,6 +124,13 @@ enableRobotsTXT = true
     name = "linkedin"
     url = "https://linkedin.com/in/rajchampaneriya"
 
+  # Shown in the footer, the desktop header and llms.txt.
+  [[params.socialIcons]]
+    name = "youtube"
+    url = "https://youtube.com/@build2understand"
+    title = "Build2Understand"
+    description = "Software engineering through practice"
+
   [[params.socialIcons]]
     name = "email"
     url = "mailto:champaneriyaraj@gmail.com"

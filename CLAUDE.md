@@ -10,6 +10,7 @@
 - **Site layouts**: `hugo-site/layouts/` (overrides theme)
 - **Everything a reader can open**: listed on `/work/` (posts and projects together); see "Work hub"
 - **Home page scroll story**: see "Scroll story"
+- **Social links** (GitHub, LinkedIn, YouTube, email): `[[params.socialIcons]]` in `hugo.toml`; rendered in the footer, the desktop header and `llms.txt`
 - **Build**: `cd hugo-site && hugo --gc --minify`
 - **Dev server**: `cd hugo-site && hugo server -D`
 
