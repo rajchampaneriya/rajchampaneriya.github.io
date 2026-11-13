@@ -197,6 +197,7 @@ Whether you're navigating a high-stakes modernization or evaluating cloud strate
 
 - **LinkedIn**: [linkedin.com/in/rajchampaneriya](https://linkedin.com/in/rajchampaneriya)
 - **Email**: [champaneriyaraj@gmail.com](mailto:champaneriyaraj@gmail.com)
+- **YouTube**: [Build2Understand](https://youtube.com/@build2understand), software engineering through practice
 
 
 </div>

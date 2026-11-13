@@ -13,7 +13,7 @@
 {{- $items := (partial "work/items.html" .).all -}}
 {{- $metrics := slice -}}
 {{- range $p.metrics }}{{ $metrics = $metrics | append (printf "%s %s" .value .label) }}{{ end -}}
-{{- $socialNames := dict "github" "GitHub" "linkedin" "LinkedIn" "email" "Email" -}}
+{{- $socialNames := dict "github" "GitHub" "linkedin" "LinkedIn" "email" "Email" "youtube" "YouTube" -}}
 
 # {{ site.Title }}
 
@@ -29,7 +29,7 @@ Key facts about {{ $author }}:
 - Track record: {{ delimit $metrics ", " }}
 {{- range site.Params.socialIcons }}
 {{- if ne .name "rss" }}
-- {{ index $socialNames .name | default .name }}: {{ .url | strings.TrimPrefix "mailto:" }}
+- {{ index $socialNames .name | default .name }}: {{ .url | strings.TrimPrefix "mailto:" }}{{ if .title }} ({{ .title }}{{ with .description }}: {{ . }}{{ end }}){{ end }}
 {{- end }}
 {{- end }}
 
