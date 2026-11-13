@@ -1,0 +1,62 @@
+{{ define "main" }}
+{{- /*
+  /work/ — the one place to find everything: posts and projects together,
+  organised by what the reader came for rather than by where the file lives.
+  Works without JavaScript (every card is listed); work-hub.js adds the
+  filtering, search and shareable ?kind= / ?tag= / ?q= URLs.
+*/ -}}
+{{ partial "page-data-meta.html" . }}
+{{- $kinds := partialCached "work/kinds.html" . "kinds" -}}
+{{- $items := partial "work/items.html" . -}}
+<section class="page-header work-hub__header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="work-hub__lead">{{ . }}</div>{{ end }}
+</section>
+
+<div class="work-hub" data-work-hub>
+    <div class="work-filter" role="group" aria-label="Filter by what you came for">
+        <button type="button" class="work-chip is-active" data-kind-chip="all" aria-pressed="true"
+                data-blurb="Everything, newest first. Long series are folded into one card.">
+            All <span class="work-chip__count">{{ len $items.list }}</span>
+        </button>
+        {{- range $kinds }}
+        {{- $key := .key -}}
+        {{- /* Count what the chip will show: items of this kind, except parts folded into a hub of the same kind. */ -}}
+        {{- $n := 0 -}}
+        {{- range $items.all -}}
+          {{- if eq (partial "work/kind.html" .).key $key -}}
+            {{- $s := partial "work/series.html" . -}}
+            {{- $folded := and $s.collapsed (not $s.isHub) (eq (partial "work/kind.html" $s.hub).key $key) -}}
+            {{- if not $folded }}{{ $n = add $n 1 }}{{ end -}}
+          {{- end -}}
+        {{- end -}}
+        {{- if gt $n 0 }}
+        <button type="button" class="work-chip" data-kind-chip="{{ .key }}" aria-pressed="false" data-blurb="{{ .blurb }}">
+            {{ .plural }} <span class="work-chip__count">{{ $n }}</span>
+        </button>
+        {{- end }}
+        {{- end }}
+    </div>
+    <p class="work-filter__blurb" data-work-blurb>Everything, newest first. Long series are folded into one card.</p>
+
+    <div class="work-tools">
+        <label class="work-search">
+            <span class="work-search__label">Search within the list</span>
+            <input type="search" data-work-search placeholder="Search titles, topics and tags" autocomplete="off" spellcheck="false">
+        </label>
+        <button type="button" class="work-topic" data-work-topic hidden></button>
+    </div>
+    <p class="work-status" data-work-status role="status" aria-live="polite"></p>
+
+    <div class="feed-grid work-grid">
+        {{- range $idx, $page := $items.all }}
+        {{ partial "work/card.html" (dict "page" $page "heading" "h2" "delay" (add (mod $idx 6) 1)) }}
+        {{- end }}
+    </div>
+
+    <div class="work-empty surface-panel" data-work-empty hidden>
+        <p>Nothing matches that combination.</p>
+        <button type="button" class="btn-text" data-work-clear>Clear filters</button>
+    </div>
+</div>
+{{ end }}

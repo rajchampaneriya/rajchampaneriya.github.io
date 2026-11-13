@@ -85,68 +85,20 @@
         </div>
     </section>
 
-    <!-- CARE Method Teaser — open layout, no card wrapper -->
-    <section class="care-teaser scroll-reveal">
-        <div class="care-teaser__layout">
-            <div class="care-teaser__heading">
-                <h2 class="care-teaser__title">The CARE Architecture Method</h2>
-                <p class="care-teaser__subtitle">A proven framework for high-stakes enterprise transformations</p>
-            </div>
-            <div class="care-teaser__steps">
-                <div class="care-step care-step--clarity scroll-reveal scroll-reveal--delay-1">
-                    <span class="care-step__letter-wrap" aria-hidden="true"><span class="care-step__letter">C</span></span>
-                    <div class="care-step__text">
-                        <span class="care-step__word">Clarity</span>
-                        <span class="care-step__desc">Decompose ambiguity into actionable decisions</span>
-                    </div>
-                </div>
-                <div class="care-step care-step--alignment scroll-reveal scroll-reveal--delay-2">
-                    <span class="care-step__letter-wrap" aria-hidden="true"><span class="care-step__letter">A</span></span>
-                    <div class="care-step__text">
-                        <span class="care-step__word">Alignment</span>
-                        <span class="care-step__desc">Map technical direction to business outcomes</span>
-                    </div>
-                </div>
-                <div class="care-step care-step--reality scroll-reveal scroll-reveal--delay-3">
-                    <span class="care-step__letter-wrap" aria-hidden="true"><span class="care-step__letter">R</span></span>
-                    <div class="care-step__text">
-                        <span class="care-step__word">Reality</span>
-                        <span class="care-step__desc">Validate through prototypes &amp; decision frameworks</span>
-                    </div>
-                </div>
-                <div class="care-step care-step--execution scroll-reveal scroll-reveal--delay-4">
-                    <span class="care-step__letter-wrap" aria-hidden="true"><span class="care-step__letter">E</span></span>
-                    <div class="care-step__text">
-                        <span class="care-step__word">Execution</span>
-                        <span class="care-step__desc">Deliver with zero critical defects</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- CARE scroll story: the method, then the method at work on real engagements.
+         Steps scroll past a pinned canvas; see layouts/partials/care-story.html. -->
+    {{ partial "care-story.html" . }}
 
-    <!-- Content Feed -->
-    <section class="latest-feed scroll-reveal">
-        <h2 class="section-title">Strategic Insights</h2>
+    <!-- Latest work: posts and projects together, long series folded into one card -->
+    <section class="latest-feed scroll-reveal" id="latest-work">
+        <h2 class="section-title">Latest work</h2>
         <div class="feed-grid">
-            {{ $pages := (where .Site.RegularPages "Type" "in" .Site.Params.mainSections).ByDate.Reverse }}
-            {{ range $idx, $p := first 5 $pages }}
-            <article class="feed-card surface-panel scroll-reveal scroll-reveal--delay-{{ add $idx 1 }}">
-                <div class="card-content">
-                    <div class="card-meta">
-                        <span class="card-date">{{ $p.Date.Format "Jan 2, 2006" }}</span>
-                        {{ with $p.Params.categories }}
-                        <span class="card-category">{{ index . 0 }}</span>
-                        {{ end }}
-                    </div>
-                    <h3><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
-                    <p>{{ $p.Summary | truncate 120 }}</p>
-                </div>
-            </article>
+            {{ range $idx, $p := first 5 (partial "work/items.html" .).list }}
+            {{ partial "work/card.html" (dict "page" $p "heading" "h3" "delay" (add $idx 1)) }}
             {{ end }}
         </div>
         <div class="view-all scroll-reveal scroll-reveal--delay-6">
-            <a href="{{ "/blog/" | absLangURL }}" class="btn btn-text">View All Insights →</a>
+            <a href="{{ "/work/" | absLangURL }}" class="btn btn-text">Browse all work →</a>
         </div>
     </section>
 </div>

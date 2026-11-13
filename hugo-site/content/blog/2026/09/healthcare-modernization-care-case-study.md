@@ -7,6 +7,17 @@ tags: ["architecture", "legacy-modernization", "azure", "case-study", "software-
 categories: ["Architecture Work"]
 summary: "A business-critical healthcare platform, a legacy estate still serving production, and zero tolerance for downtime. An anonymized walkthrough of how the CARE Architecture Method — Clarity, Alignment, Reality, Execution — turned a high-risk migration into a controlled, measured modernization."
 disclaimer: true
+# Home page scroll story ("CARE in the field"). See CLAUDE.md → "Scroll story".
+story:
+  order: 1
+  title: "The platform that couldn't stop"
+  metric: "99.95%"
+  metricLabel: "uptime held through a zero-downtime cutover"
+  care:
+    clarity: "Reframed modernization around operational continuity, service seams and measurable outcomes."
+    alignment: "Made the big-bang versus phased trade-off explicit, with shared ownership of migration risk."
+    reality: "Validated the migration path with incremental delivery, automation, telemetry and performance evidence."
+    execution: "Delivered the cloud-native platform with a controlled, zero-downtime cutover."
 ---
 
 {{< tldr >}}

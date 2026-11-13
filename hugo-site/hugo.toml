@@ -14,14 +14,14 @@ enableRobotsTXT = true
 
 [params]
   env = "production"
-  description = "raj see dot work is the portfolio of Raj Champaneriya, an Technical Solution Architect & Strategic Technology Leader. He shares views on high-stakes transformations, zero-downtime modernizations, and architecture that protects careers and accelerates change."
+  description = "raj see dot work is the portfolio of Raj Champaneriya, a Forward Deployed Engineer who embeds with enterprise teams to turn ambiguous, high-stakes problems into production systems. Case studies, builds and points of view on legacy modernization, cloud-native platforms and applied AI."
 
   # Landing page audio (Listen button on home)
   landingAudioSrc = "/audio/landing.wav"
   landingAudioTitle = "Raj Champaneriya — Portfolio Overview"
   author = "Raj Champaneriya"
   mainSections = ["blog"]
-  keywords = ["technical solutions", "strategic technology leader", "Fortune 500 transformation", "legacy modernization", "cloud-native architecture", "solution architecture", "event-driven architecture", "system design", "CARE architecture method"]
+  keywords = ["forward deployed engineer", "FDE", "applied AI", "Fortune 500 transformation", "legacy modernization", "cloud-native architecture", "solution architecture", "event-driven architecture", "system design", "CARE architecture method"]
   
   # Assets (Favicons)
   [params.assets]
@@ -52,20 +52,20 @@ enableRobotsTXT = true
   [params.profileMode]
     enabled = true
     title= "Raj Champaneriya"
-    subtitle = "Technical Solution Architect That Protects Careers and Accelerates Transformations"
+    subtitle = "Forward Deployed Engineer: embedded with enterprise teams, from ambiguous brief to production"
     imageUrl = "images/profile.jpg"
     imageWidth = 140
     imageHeight = 140
-    imageTitle = "Raj Champaneriya — Technical Solution Architect & Strategic Technology Leader"
+    imageTitle = "Raj Champaneriya — Forward Deployed Engineer"
     buttons = [
-      { name = "Architecture Blueprints", url = "/projects" },
-      { name = "Strategic Insights", url = "/blog" }
+      { name = "See the work", url = "/work/" },
+      { name = "How I work", url = "/#care" }
     ]
 
   # Premium positioning (no employer/vendor branding — personal views only)
   [params.premium]
-    headline = "Technical Solution Architect & Strategic Technology Leader"
-    tagline = "Architecture that protects careers and accelerates transformations"
+    headline = "Forward Deployed Engineer"
+    tagline = "Embedded with enterprise teams, from ambiguous brief to production"
     experience = "13+ years across 4 Fortune 500 industries"
     methodology = "The CARE Architecture Method"
     methodologyParts = ["Clarity", "Alignment", "Reality", "Execution"]
@@ -89,6 +89,32 @@ enableRobotsTXT = true
       icon = "cost"
 
 
+  # The CARE scroll story on the home page (layouts/partials/care-story.html).
+  # Each step is one beat of the story: the copy scrolls past while the pinned
+  # canvas animates to match. "CARE in the field" beats come from posts and
+  # projects that carry a `story:` block in their front matter.
+  [params.care]
+    question = "How does an ambiguous, high-stakes brief become **a result you can measure**?"
+    intro = "Four moves, in the same order on every engagement. Scroll to see each one, then the method at work in the field."
+    outro = "That is CARE: a repeatable path from an unclear brief to a measured result."
+
+    [[params.care.steps]]
+      word = "Clarity"
+      promise = "Decompose ambiguity into actionable decisions"
+      detail = "Start with questions, not diagrams. Where is the operational risk, where are the seams, and what would count as success?"
+    [[params.care.steps]]
+      word = "Alignment"
+      promise = "Map technical direction to business outcomes"
+      detail = "Put the cost of every option on the table, so product, engineering, platform and delivery leaders back the same path."
+    [[params.care.steps]]
+      word = "Reality"
+      promise = "Validate through prototypes & decision frameworks"
+      detail = "Treat every assumption as a claim to test. Working software and evidence decide what scales, not opinion."
+    [[params.care.steps]]
+      word = "Execution"
+      promise = "Deliver with zero critical defects"
+      detail = "Ship in small, reversible slices, instrument each one, and expand only when the evidence supports the next step."
+
   # Social links
   [[params.socialIcons]]
     name = "github"
@@ -108,17 +134,13 @@ enableRobotsTXT = true
 
 # Menu configuration
 [menu]
+  # One entry for everything a reader can open. Posts (/blog/...) and projects
+  # (/projects/...) keep their own URLs but are listed together on /work/.
   [[menu.main]]
-    identifier = "blog"
-    name = "Insights"
-    url = "/blog/"
+    identifier = "work"
+    name = "Work"
+    url = "/work/"
     weight = 10
-
-  [[menu.main]]
-    identifier = "projects"
-    name = "Architecture Blueprints"
-    url = "/projects/"
-    weight = 20
 
   [[menu.main]]
     identifier = "about"

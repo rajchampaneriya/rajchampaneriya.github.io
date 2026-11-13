@@ -1,0 +1,9 @@
+{{- /*
+  Pages that appear as "CARE in the field" beats in the home page scroll story:
+  any post or project with a `story:` block in its front matter, ordered by
+  story.order, at most four. Drafts drop out of production builds on their own.
+*/ -}}
+{{- $all := (partial "work/items.html" .).all -}}
+{{- $picked := slice -}}
+{{- range sort (where $all "Params.story" "!=" nil) "Params.story.order" }}{{ $picked = $picked | append . }}{{ end -}}
+{{- return (first 4 $picked) -}}

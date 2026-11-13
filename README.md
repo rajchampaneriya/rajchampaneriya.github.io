@@ -1,6 +1,6 @@
-# rajc.work — Technical Solutions & Thought Leadership
+# rajc.work — Forward Deployed Engineer
 
-Technical Solution Architect for High-Stakes Transformations — Architecture That Protects Careers and Accelerates Transformations
+Raj Champaneriya, Forward Deployed Engineer: embedded with enterprise teams, from ambiguous brief to production. Case studies, builds and writing.
 
 Hugo site deployed to GitHub Pages. Built with the Frontier theme.
 
@@ -20,8 +20,10 @@ cd hugo-site && hugo --gc --minify
 ## Content Structure
 
 - **Blog**: `hugo-site/content/blog/YYYY/MM/slug.md`
-- **Projects**: `hugo-site/content/projects/slug.md`
+- **Projects**: `hugo-site/content/projects/slug/_index.md`
 - **Categories**: Point of View, Architecture Work, Technical Concepts, Technology, Experience, Industry Experience
+- **Work hub**: posts and projects are listed together on `/work/`, filtered by kind (case studies, builds, points of view, deep dives, industry notes). `/blog/` and `/projects/` redirect there.
+- **Home page scroll story**: the CARE method as a scroll-driven canvas animation; copy in `hugo.toml` (`[params.care]`), field examples from `story:` front matter. See `CLAUDE.md`.
 
 ## Stack
 

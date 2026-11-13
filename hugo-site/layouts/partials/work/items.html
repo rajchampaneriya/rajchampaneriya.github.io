@@ -1,0 +1,19 @@
+{{- /*
+  Everything a reader can open, as one collection: posts under /blog/ plus the
+  project pages under /projects/ (those are sections, so site.RegularPages
+  alone misses them).
+
+    all  — every published item, newest first
+    list — the default listing: `all` minus the parts of collapsed series
+           (see work/series.html), so an 18-part series is one card, not 18
+*/ -}}
+{{- $posts := where site.RegularPages "Section" "blog" -}}
+{{- $projects := slice -}}
+{{- with site.GetPage "/projects" }}{{ $projects = union .Sections .RegularPages }}{{ end -}}
+{{- $all := (union $posts $projects).ByDate.Reverse -}}
+{{- $list := slice -}}
+{{- range $all -}}
+  {{- $s := partial "work/series.html" . -}}
+  {{- if not (and $s.collapsed (not $s.isHub)) }}{{ $list = $list | append . }}{{ end -}}
+{{- end -}}
+{{- return (dict "all" $all "list" $list) -}}

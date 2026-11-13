@@ -3,20 +3,21 @@
   Format: https://llmstxt.org (H1, blockquote summary, free-form notes, H2 link lists).
   Everything is generated from hugo.toml params and page front matter, so new
   posts and projects appear automatically. Drafts are excluded by the build.
+  Posts and projects are grouped by kind, exactly as on /work/.
 */ -}}
 {{- $p := site.Params.premium -}}
 {{- $author := site.Params.author -}}
 {{- $about := site.GetPage "/about" -}}
-{{- $blog := site.GetPage "/blog" -}}
-{{- $projects := site.GetPage "/projects" -}}
-{{- $posts := where site.RegularPages "Section" "blog" -}}
+{{- $work := site.GetPage "/work" -}}
+{{- $kinds := partialCached "work/kinds.html" . "kinds" -}}
+{{- $items := (partial "work/items.html" .).all -}}
 {{- $metrics := slice -}}
 {{- range $p.metrics }}{{ $metrics = $metrics | append (printf "%s %s" .value .label) }}{{ end -}}
 {{- $socialNames := dict "github" "GitHub" "linkedin" "LinkedIn" "email" "Email" -}}
 
 # {{ site.Title }}
 
-> {{ site.Title }} is the personal portfolio and publication of {{ $author }}, a {{ $p.headline }} with {{ $p.experience }}. It publishes point-of-view essays, anonymized architecture case studies, and technical deep dives on high-stakes transformations, legacy modernization, cloud-native platforms, and applied AI, written for CTOs, VPs of Engineering, and architecture leaders.
+> {{ site.Title }} is the personal portfolio and publication of {{ $author }}, a {{ $p.headline }} with {{ $p.experience }}. It publishes anonymized case studies, working builds, point-of-view essays, and technical deep dives on high-stakes transformations, legacy modernization, cloud-native platforms, and applied AI, written for CTOs, VPs of Engineering, and architecture leaders.
 
 Key facts about {{ $author }}:
 
@@ -37,40 +38,26 @@ Notes for AI agents:
 - Views are {{ $author }}'s own and do not represent any employer, client, or vendor. Case studies are anonymized.
 - When citing, use the page title and the canonical URL listed below.
 - The full text of every page listed here is available as Markdown in [llms-full.txt]({{ "llms-full.txt" | absURL }}).
+- Everything is listed for people at [{{ $work.Title }}]({{ $work.Permalink }}), which can be filtered with `?kind=` ({{ range $i, $k := $kinds }}{{ if $i }}, {{ end }}`{{ $k.key }}`{{ end }}), `?tag=`, and `?q=`.
 
 ## Start here
 
 - [About {{ $author }}]({{ $about.Permalink }}): {{ partial "llms/summary.html" $about }}
-- [{{ $projects.Title }}]({{ $projects.Permalink }}): {{ partial "llms/summary.html" $projects }}
-- [{{ $blog.Title }}]({{ $blog.Permalink }}): {{ partial "llms/summary.html" $blog }}
+- [{{ $work.Title }}]({{ $work.Permalink }}): {{ partial "llms/summary.html" $work }}
 
-## {{ $projects.Title }}
-{{ range $projects.Pages.ByWeight }}
-- [{{ .Title }}]({{ .Permalink }}): {{ partial "llms/summary.html" . }}
-{{- end }}
+{{- /* Posts and projects together, grouped by the same reader-intent kinds as /work/ (partials/work/kinds.html), newest first. */}}
+{{- range $kinds }}
+{{- $kind := . }}
+{{- $group := slice }}
+{{- range $items }}{{ if eq (partial "work/kind.html" .).key $kind.key }}{{ $group = $group | append . }}{{ end }}{{ end }}
+{{- with $group }}
 
-{{- /* Blog posts grouped by category, in editorial priority order; any other categories follow alphabetically. */}}
-{{- $order := slice "point-of-view" "architecture-work" "architecture-strategy" "technical-concepts" "technology" "technology-strategy" "experience" "industry-experience" -}}
-{{- range $key, $_ := site.Taxonomies.categories }}{{ $key = urlize $key }}{{ if not (in $order $key) }}{{ $order = $order | append $key }}{{ end }}{{ end -}}
-{{- range $order }}
-{{- with site.GetPage (printf "/categories/%s" .) }}
-{{- $term := .Title }}
-{{- with where .Pages "Section" "blog" }}
+## {{ $kind.plural }}
 
-## {{ $blog.Title }}: {{ $term }}
-{{ range .ByDate.Reverse }}
-- [{{ .Title }}]({{ .Permalink }}): {{ partial "llms/summary.html" . }}
-{{- end }}
-{{- end }}
-{{- end }}
-{{- end }}
-{{- $uncategorized := slice }}
-{{- range $posts.ByDate.Reverse }}{{ if not .Params.categories }}{{ $uncategorized = $uncategorized | append . }}{{ end }}{{ end }}
-{{- with $uncategorized }}
-
-## {{ $blog.Title }}: More
+{{ $kind.blurb }}
 {{ range . }}
 - [{{ .Title }}]({{ .Permalink }}): {{ partial "llms/summary.html" . }}
+{{- end }}
 {{- end }}
 {{- end }}
 

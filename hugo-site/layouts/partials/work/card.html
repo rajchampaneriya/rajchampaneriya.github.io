@@ -1,0 +1,58 @@
+{{- /*
+  One card for a post or project. Used by /work/ and the home page.
+
+  Call with: dict "page" $page "heading" "h2" "delay" 1
+  The data-* attributes are what work-hub.js filters on:
+    data-kind         — kind key (see work/kinds.html)
+    data-tags         — urlized tags, categories and series, comma-separated
+    data-series-hub   — set on the card that is the home of a collapsed series
+    data-series-part  — set on the parts of that series. While the hub card is in
+                        view the parts stay folded inside it; they appear on their own
+                        when the reader searches, picks a topic, or picks a kind the
+                        hub does not belong to
+*/ -}}
+{{- $p := .page -}}
+{{- $heading := .heading | default "h2" -}}
+{{- $kind := partial "work/kind.html" $p -}}
+{{- $series := partial "work/series.html" $p -}}
+{{- $tokens := slice -}}
+{{- range ($p.Params.tags | default slice) }}{{ $tokens = $tokens | append (urlize .) }}{{ end -}}
+{{- range ($p.Params.categories | default slice) }}{{ $tokens = $tokens | append (urlize .) }}{{ end -}}
+{{- range ($p.Params.series | default slice) }}{{ $tokens = $tokens | append (urlize .) }}{{ end -}}
+{{- $isPart := and $series.collapsed (not $series.isHub) -}}
+<article class="feed-card surface-panel work-card scroll-reveal scroll-reveal--delay-{{ .delay | default 1 }}"
+         data-work-item data-kind="{{ $kind.key }}" data-tags="{{ delimit $tokens "," }}"
+         {{- if $isPart }} data-series-part="{{ $series.slug }}"{{ end }}
+         {{- if and $series.collapsed $series.isHub }} data-series-hub="{{ $series.slug }}"{{ end }}>
+    <div class="card-content">
+        <div class="card-meta">
+            <span class="work-kind work-kind--{{ $kind.key }}">{{ $kind.label }}</span>
+            {{- if not $p.Date.IsZero }}
+            <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format "Jan 2, 2006" }}</time>
+            {{- end }}
+            {{- if and $series.name (not $series.isHub) (gt $series.index 0) }}
+            <span class="work-series-tag">{{ $series.name }} · {{ $series.index }}/{{ $series.total }}</span>
+            {{- end }}
+        </div>
+        {{- /* Go templates escape a dynamic tag name, so the two heading levels are spelled out. */}}
+        {{- if eq $heading "h3" }}
+        <h3 class="work-card__title"><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
+        {{- else }}
+        <h2 class="work-card__title"><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h2>
+        {{- end }}
+        <p>{{ partial "llms/summary.html" $p | truncate 150 }}</p>
+        {{- if and $series.isHub (gt $series.total 0) }}
+        <details class="work-parts">
+            <summary>{{ $series.total }} {{ if eq $series.total 1 }}article{{ else }}articles{{ end }} in this series</summary>
+            <ol>
+                {{- range $series.parts }}
+                <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                {{- end }}
+            </ol>
+        </details>
+        {{- end }}
+        <div class="card-actions">
+            <a href="{{ $p.RelPermalink }}" class="read-more btn-text" aria-label="{{ $kind.cta }}: {{ $p.Title }}">{{ $kind.cta }} →</a>
+        </div>
+    </div>
+</article>

@@ -3,11 +3,11 @@
 <section class="page-header scroll-reveal">
   <h1>Redirecting…</h1>
   <div class="page-content surface-panel">
-    <p>Redirecting to the Insights listing filtered by <strong>{{ .Title }}</strong>.</p>
-    <p>If you are not redirected automatically, <a href="{{ "/blog/" | relURL }}?tag={{ .Title | urlize }}">click here</a>.</p>
+    <p>Redirecting to Work, filtered by <strong>{{ .Title }}</strong>.</p>
+    <p>If you are not redirected automatically, <a href="{{ "/work/" | relURL }}?tag={{ .Title | urlize }}">click here</a>.</p>
   </div>
 </section>
 
-<meta http-equiv="refresh" content="0; url={{ "/blog/" | relURL }}?tag={{ .Title | urlize }}">
-<script>window.location.replace('{{ "/blog/" | relURL }}?tag={{ .Title | urlize }}');</script>
+<meta http-equiv="refresh" content="0; url={{ "/work/" | relURL }}?tag={{ .Title | urlize }}">
+<script>window.location.replace('{{ "/work/" | relURL }}?tag={{ .Title | urlize }}');</script>
 {{ end }}

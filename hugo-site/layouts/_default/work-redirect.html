@@ -1,0 +1,26 @@
+{{- /*
+  Stand-alone redirect page (no base template) for the old list URLs.
+
+  /blog/ and /projects/ used to be two separate listings. Everything now lives
+  on /work/, so any page with `layout: "work-redirect"` in its front matter
+  sends the visitor there. Existing links keep working, including ?tag= links:
+  the script carries the query string and hash across; the meta refresh is the
+  no-JavaScript fallback. Set `redirectQuery` to pre-select a filter.
+*/ -}}
+{{- $work := site.GetPage "/work" -}}
+{{- $query := .Params.redirectQuery | default "" -}}
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode | default "en-us" }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ $work.Title }} | {{ site.Title }}</title>
+<link rel="canonical" href="{{ $work.Permalink }}">
+<meta name="robots" content="noindex">
+<script>location.replace({{ $work.RelPermalink }} + (location.search || {{ $query }}) + location.hash);</script>
+<meta http-equiv="refresh" content="0; url={{ $work.RelPermalink }}{{ $query }}">
+</head>
+<body>
+<p>This page has moved. Continue to <a href="{{ $work.RelPermalink }}{{ $query }}">{{ $work.Title }}</a>.</p>
+</body>
+</html>

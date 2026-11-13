@@ -1,0 +1,14 @@
+{{- /*
+  "Part 3 of 18 in <series>" with previous / next links, for a post that
+  belongs to a series (see work/series.html). Renders nothing otherwise.
+*/ -}}
+{{- $s := partial "work/series.html" . -}}
+{{- if and $s.name (gt $s.index 0) (gt $s.total 1) }}
+<nav class="series-nav" aria-label="Series navigation">
+    <span>Part {{ $s.index }} of {{ $s.total }} in {{ with $s.hub }}<a href="{{ .RelPermalink }}">{{ $s.name }}</a>{{ else }}<strong>{{ $s.name }}</strong>{{ end }}</span>
+    <span class="series-nav__steps">
+        {{- with $s.prev }}<a href="{{ .RelPermalink }}" rel="prev" aria-label="Previous part: {{ .Title }}">← Previous</a>{{ end }}
+        {{- with $s.next }}<a href="{{ .RelPermalink }}" rel="next" aria-label="Next part: {{ .Title }}">Next →</a>{{ end }}
+    </span>
+</nav>
+{{- end }}

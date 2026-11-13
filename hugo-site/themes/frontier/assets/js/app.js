@@ -13,18 +13,22 @@ window.swup = swup;
 
 // Navigation Active State Update + LinkedIn Share link (so Share always points to current page URL)
 // + GitHub nav link sync (so client-side Swup navigation shows the correct repo or hides the link)
+// A link is active when the current path starts with its href, or with any prefix
+// listed in data-nav-match (the Work link covers /work/, /blog/... and /projects/...).
+function navLinkMatches(el, path) {
+    const href = el.getAttribute('href');
+    if (!href || href === '#') return false;
+    const hrefPath = href.startsWith('http') ? new URL(href).pathname : href;
+    const prefixes = (el.dataset.navMatch || hrefPath).split(',').map(p => p.trim()).filter(Boolean);
+    return prefixes.some(prefix => prefix === path || (prefix !== '/' && path.startsWith(prefix.replace(/\/$/, ''))));
+}
+
 function updateNav() {
     const path = window.location.pathname;
     // Use current page URL so share works on client-side nav, localhost, and correct baseURL
     const shareURL = window.location.href;
     document.querySelectorAll('.bottom-nav .nav-item').forEach(el => {
-        el.classList.remove('active');
-        const href = el.getAttribute('href');
-        if (!href) return;
-        const hrefPath = href.startsWith('http') ? new URL(href).pathname : href;
-        if (hrefPath === path || (hrefPath !== '/' && path.startsWith(hrefPath.replace(/\/$/, '')))) {
-            el.classList.add('active');
-        }
+        el.classList.toggle('active', navLinkMatches(el, path));
     });
     // Update every LinkedIn share link on the page (bottom nav + any in-content) to current URL
     document.querySelectorAll('a[href*="linkedin.com/sharing"]').forEach(el => {
@@ -50,13 +54,7 @@ function updateNav() {
 
     // Desktop top nav: sync active state (same path logic as bottom nav)
     document.querySelectorAll('.desktop-top-nav a.desktop-nav-link').forEach(el => {
-        el.classList.remove('active');
-        const href = el.getAttribute('href');
-        if (!href || href === '#' || href.startsWith('http')) return;
-        const hrefPath = href.startsWith('http') ? new URL(href).pathname : href;
-        if (hrefPath === path || (hrefPath !== '/' && path.startsWith(hrefPath.replace(/\/$/, '')))) {
-            el.classList.add('active');
-        }
+        el.classList.toggle('active', !el.target && navLinkMatches(el, path));
     });
 }
 
@@ -192,43 +190,6 @@ document.addEventListener('DOMContentLoaded', initScreenshotCarousels);
 swup.hooks.on('page:view', () => {
   requestAnimationFrame(initScreenshotCarousels);
 });
-
-function initBlogTagFilter() {
-  const feedGrid = document.querySelector('.feed-grid');
-  if (!feedGrid) return;
-  const params = new URLSearchParams(window.location.search);
-  const tag = (params.get('tag') || params.get('tags'));
-  if (!tag) return;
-
-  const normalizedTag = tag.toString().toLowerCase();
-  const cards = feedGrid.querySelectorAll('.feed-card');
-  let found = 0;
-  cards.forEach(card => {
-    const tagsAttr = (card.getAttribute('data-tags') || '').toLowerCase();
-    const tags = tagsAttr.split(',').map(t => t.trim()).filter(Boolean);
-    if (tags.includes(normalizedTag)) {
-      card.style.display = '';
-      found++;
-    } else {
-      card.style.display = 'none';
-    }
-  });
-
-  const existing = document.getElementById('blog-filter-empty');
-  if (existing) existing.remove();
-  if (found === 0) {
-    const msg = document.createElement('div');
-    msg.id = 'blog-filter-empty';
-    msg.className = 'no-results surface-panel';
-    msg.textContent = `No posts found for "${tag}".`;
-    feedGrid.parentNode.insertBefore(msg, feedGrid.nextSibling);
-  } else {
-    window.scrollTo({ top: feedGrid.offsetTop - 20, behavior: 'smooth' });
-  }
-}
-
-document.addEventListener('DOMContentLoaded', initBlogTagFilter);
-swup.hooks.on('page:view', () => { requestAnimationFrame(initBlogTagFilter); });
 
 // Theme Toggle Logic
 const themeToggleBtn = document.getElementById('theme-toggle');
@@ -380,10 +341,20 @@ swup.hooks.on('page:view', () => { initDesktopAudioTrigger(); });
 import './audio-player.js';
 import './ai-chat.js';
 import { runScrollspy } from './scrollspy.js';
+import { initCareStory } from './care-story.js';
+import { initWorkHub } from './work-hub.js';
 
 document.addEventListener('DOMContentLoaded', runScrollspy);
 if (window.swup && window.swup.hooks) {
   window.swup.hooks.on('page:view', () => requestAnimationFrame(runScrollspy));
 }
 
-
+// ------------------ CARE scroll story (home) and Work hub filters (/work/) ------------------
+// Both look for their own root element and do nothing on pages that lack it. Inline scripts in
+// swapped content do not run under Swup, so they start here: on first load and after every visit.
+function initPageFeatures() {
+  initCareStory();
+  initWorkHub();
+}
+document.addEventListener('DOMContentLoaded', initPageFeatures);
+swup.hooks.on('page:view', () => requestAnimationFrame(initPageFeatures));

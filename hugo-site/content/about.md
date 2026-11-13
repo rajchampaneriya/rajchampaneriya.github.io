@@ -1,15 +1,15 @@
 ---
 title: "About Me"
 layout: "about"
-description: "Technical Solution Architect & Strategic Technology Leader specializing in high-stakes Fortune 500 transformations — $8M+ modernizations, 99.95% uptime SLAs, and zero-downtime migrations across Healthcare, Insurance, Media & Logistics."
-summary: "Technical Solution Architect with 13+ years of experience across Fortune 500 transformations. I specialize in de-risking multi-million-dollar modernization initiatives, delivering 99.95% uptime SLAs, and mentoring teams to ship successfully without career-damaging failures. I CARE about Clarity → Alignment → Reality → Execution."
+description: "Forward Deployed Engineer for high-stakes Fortune 500 transformations — $8M+ modernizations, 99.95% uptime SLAs, and zero-downtime migrations across Healthcare, Insurance, Media & Logistics."
+summary: "Forward Deployed Engineer with 13+ years of experience across Fortune 500 transformations. I embed with enterprise teams to turn ambiguous, high-stakes problems into production systems: de-risking multi-million-dollar modernization initiatives, delivering 99.95% uptime SLAs, and mentoring teams to ship successfully without career-damaging failures. I CARE about Clarity → Alignment → Reality → Execution."
 audio: "/audio/about-me.wav"
 audioTitle: "About Me"
 ---
 
 ## The CARE Architecture Method
 
-Every high-stakes transformation I lead follows a proven framework:
+Every engagement I am deployed into follows the same proven framework:
 
 <div class="process-flow scroll-reveal">
   <div class="process-step process-step--blue">
@@ -36,6 +36,8 @@ Every high-stakes transformation I lead follows a proven framework:
     <div class="process-step__desc">Zero critical defects, on-time delivery</div>
   </div>
 </div>
+
+[See CARE at work on real engagements →](/#care)
 
 ## What I Deliver
 

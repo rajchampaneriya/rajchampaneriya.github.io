@@ -12,6 +12,8 @@ ShowToc: true
 disclaimer: true
 audio: "/projects/travel-and-transport/audio/aus-rail-industry.wav"
 audioTitle: "Australian Rail Industry"
+# The posts that share this series are folded into this page's card on /work/.
+series: ["Australian Rail Deep Dive"]
 ---
 
 <div class="content-callout">

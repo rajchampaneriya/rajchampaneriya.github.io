@@ -7,6 +7,17 @@ tags: ["architecture", "distributed-systems", "case-study", "azure", "software-e
 categories: ["Architecture Work"]
 summary: "A zone-redundant deployment silently doubled every message an integration platform processed. An anonymized walkthrough of how the CARE Architecture Method — Clarity, Alignment, Reality, Execution — turned a correctness incident into a self-healing architecture."
 disclaimer: true
+# Home page scroll story ("CARE in the field"). See CLAUDE.md → "Scroll story".
+story:
+  order: 2
+  title: "The night redundancy broke correctness"
+  metric: "Zero"
+  metricLabel: "duplicate processing after the fix, zone redundancy intact"
+  care:
+    clarity: "Turned \"duplicates are bad\" into \"redundancy and singleton processing need explicit coordination.\""
+    alignment: "Killed the tempting single-instance shortcut before it wasted anyone's time."
+    reality: "Put three options through constraint-based trade-offs instead of preference-based debate."
+    execution: "Contained the damage first, shipped the smallest correct change, and proved failover by causing it."
 ---
 
 {{< tldr >}}

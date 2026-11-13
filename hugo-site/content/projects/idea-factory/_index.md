@@ -13,6 +13,12 @@ githubRepo: "https://github.com/rajchampaneriya/insight-weaver"
 weight: 2
 disclaimer: true
 ShowToc: true
+# Home page scroll story ("CARE in the field"). See CLAUDE.md → "Scroll story".
+story:
+  order: 4
+  title: "The Idea Factory Blueprint"
+  metric: "48 hours"
+  metricLabel: "from idea to evidence, down from 6–8 weeks"
 ---
 
 {{< tldr >}}
